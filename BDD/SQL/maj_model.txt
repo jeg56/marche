@@ -1,0 +1,22 @@
+class RefMarche(models.Model):
+    heure_debut = models.ForeignKey(Horaire, models.DO_NOTHING, related_name='heure_debut')
+    heure_fin = models.ForeignKey(Horaire, models.DO_NOTHING,related_name='heure_fin')
+
+        verbose_name = "Marché"
+        
+    def __str__(self):
+        return "{}" .format(self.nom)
+
+
+
+class Adresse(models.Model):
+    def __str__(self):
+        return "{} {} {} ({},{})".format(self.adresse,self.cp,self.ville,self.latitude,self.longitude)
+
+class Horaire(models.Model):
+    def __str__(self):
+        return self.heure
+
+class JoursSemaine(models.Model):
+    def __str__(self):
+        return self.jours
