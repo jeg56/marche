@@ -1,32 +1,99 @@
 
-CREATE SEQUENCE marketPlace.type_retrait_id_seq;
+CREATE SEQUENCE marketPlace.ref_metier_id_seq;
 
-CREATE TABLE marketPlace.type_retrait (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.type_retrait_id_seq'),
-                label VARCHAR(25) NOT NULL,
-                CONSTRAINT type_retrait_pk PRIMARY KEY (id)
+CREATE TABLE marketPlace.ref_metier (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_metier_id_seq'),
+                label VARCHAR(50) NOT NULL,
+                CONSTRAINT ref_metier_pk PRIMARY KEY (id)
 );
-COMMENT ON COLUMN marketPlace.type_retrait.label IS 'Sur le marché ou chez le producteur';
 
 
-ALTER SEQUENCE marketPlace.type_retrait_id_seq OWNED BY marketPlace.type_retrait.id;
+ALTER SEQUENCE marketPlace.ref_metier_id_seq OWNED BY marketPlace.ref_metier.id;
 
-CREATE SEQUENCE marketPlace.type_client_id_seq;
+CREATE SEQUENCE marketPlace.avis_id_seq;
 
-CREATE TABLE marketPlace.type_client (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.type_client_id_seq'),
-                label VARCHAR(25) NOT NULL,
-                CONSTRAINT type_client_pk PRIMARY KEY (id)
+CREATE TABLE marketPlace.avis (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.avis_id_seq'),
+                avis VARCHAR,
+                note INTEGER NOT NULL,
+                CONSTRAINT index_avis_id PRIMARY KEY (id)
 );
-COMMENT ON COLUMN marketPlace.type_client.label IS 'type privé ou pros';
 
 
-ALTER SEQUENCE marketPlace.type_client_id_seq OWNED BY marketPlace.type_client.id;
+ALTER SEQUENCE marketPlace.avis_id_seq OWNED BY marketPlace.avis.id;
 
-CREATE SEQUENCE marketPlace.adresse_id_seq;
+CREATE SEQUENCE marketPlace.ref_famille_id_seq;
 
-CREATE TABLE marketPlace.adresse (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.adresse_id_seq'),
+CREATE TABLE marketPlace.ref_famille (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_famille_id_seq'),
+                label VARCHAR(255) NOT NULL,
+                CONSTRAINT ref_famille_pk PRIMARY KEY (id)
+);
+
+
+ALTER SEQUENCE marketPlace.ref_famille_id_seq OWNED BY marketPlace.ref_famille.id;
+
+CREATE SEQUENCE marketPlace.ref_frequence_id_seq;
+
+CREATE TABLE marketPlace.ref_frequence (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_frequence_id_seq'),
+                label VARCHAR(25) NOT NULL,
+                CONSTRAINT ref_frequence_pk PRIMARY KEY (id)
+);
+
+
+ALTER SEQUENCE marketPlace.ref_frequence_id_seq OWNED BY marketPlace.ref_frequence.id;
+
+CREATE SEQUENCE marketPlace.ref_manifestation_id_seq;
+
+CREATE TABLE marketPlace.ref_manifestation (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_manifestation_id_seq'),
+                label VARCHAR(25) NOT NULL,
+                CONSTRAINT ref_manifestation_pk PRIMARY KEY (id)
+);
+
+
+ALTER SEQUENCE marketPlace.ref_manifestation_id_seq OWNED BY marketPlace.ref_manifestation.id;
+
+CREATE SEQUENCE marketPlace.ref_jours_semaine_id_seq;
+
+CREATE TABLE marketPlace.ref_jours_semaine (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_jours_semaine_id_seq'),
+                jours VARCHAR(15) NOT NULL,
+                CONSTRAINT ref_jours_semaine_pk PRIMARY KEY (id)
+);
+
+
+ALTER SEQUENCE marketPlace.ref_jours_semaine_id_seq OWNED BY marketPlace.ref_jours_semaine.id;
+
+CREATE SEQUENCE marketPlace.ref_type_retrait_id_seq;
+
+CREATE TABLE marketPlace.ref_type_retrait (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_type_retrait_id_seq'),
+                label VARCHAR(25) NOT NULL,
+                CONSTRAINT ref_type_retrait_pk PRIMARY KEY (id)
+);
+COMMENT ON COLUMN marketPlace.ref_type_retrait.label IS 'Sur le marché ou chez le producteur';
+
+
+ALTER SEQUENCE marketPlace.ref_type_retrait_id_seq OWNED BY marketPlace.ref_type_retrait.id;
+
+CREATE SEQUENCE marketPlace.ref_type_client_id_seq;
+
+CREATE TABLE marketPlace.ref_type_client (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_type_client_id_seq'),
+                label VARCHAR(25) NOT NULL,
+                CONSTRAINT ref_type_client_pk PRIMARY KEY (id)
+);
+COMMENT ON COLUMN marketPlace.ref_type_client.label IS 'type privé ou pros';
+
+
+ALTER SEQUENCE marketPlace.ref_type_client_id_seq OWNED BY marketPlace.ref_type_client.id;
+
+CREATE SEQUENCE marketPlace.adresses_id_seq;
+
+CREATE TABLE marketPlace.adresses (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.adresses_id_seq'),
                 adresse VARCHAR(255) NOT NULL,
                 cp VARCHAR(6) NOT NULL,
                 ville VARCHAR(255) NOT NULL,
@@ -36,15 +103,18 @@ CREATE TABLE marketPlace.adresse (
 );
 
 
-ALTER SEQUENCE marketPlace.adresse_id_seq OWNED BY marketPlace.adresse.id;
+ALTER SEQUENCE marketPlace.adresses_id_seq OWNED BY marketPlace.adresses.id;
 
 CREATE SEQUENCE marketPlace.clients_id_seq;
 
 CREATE TABLE marketPlace.clients (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.clients_id_seq'),
-                nom VARCHAR(250) NOT NULL,
-                mail VARCHAR(255) NOT NULL,
+                nom VARCHAR(255) NOT NULL,
+                prenom VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                etat_email BOOLEAN DEFAULT False NOT NULL,
                 type_client_id INTEGER NOT NULL,
+                num_telephone_portable VARCHAR(10),
                 photo VARCHAR(255),
                 adresse_id INTEGER NOT NULL,
                 CONSTRAINT index_clients_id PRIMARY KEY (id)
@@ -65,10 +135,8 @@ CREATE TABLE marketPlace.commande (
 
 ALTER SEQUENCE marketPlace.commande_id_seq OWNED BY marketPlace.commande.id;
 
-CREATE SEQUENCE marketPlace.tickets_id_seq;
-
 CREATE TABLE marketPlace.tickets (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.tickets_id_seq'),
+                id INTEGER NOT NULL,
                 commande_id INTEGER NOT NULL,
                 calendrier_id INTEGER NOT NULL,
                 type_retrait_id INTEGER NOT NULL,
@@ -77,11 +145,10 @@ CREATE TABLE marketPlace.tickets (
                 prix REAL NOT NULL,
                 quantite INTEGER,
                 poids INTEGER,
+                avis_id INTEGER DEFAULT 1 NOT NULL,
                 CONSTRAINT index_tickets_id PRIMARY KEY (id)
 );
 
-
-ALTER SEQUENCE marketPlace.tickets_id_seq OWNED BY marketPlace.tickets.id;
 
 CREATE SEQUENCE marketPlace.calendrier_id_seq;
 
@@ -108,57 +175,71 @@ CREATE TABLE marketPlace.calendrier (
 
 ALTER SEQUENCE marketPlace.calendrier_id_seq OWNED BY marketPlace.calendrier.id;
 
-CREATE SEQUENCE marketPlace.horaire_id_seq;
+CREATE SEQUENCE marketPlace.ref_horaire_id_seq;
 
-CREATE TABLE marketPlace.horaire (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.horaire_id_seq'),
+CREATE TABLE marketPlace.ref_horaire (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_horaire_id_seq'),
                 heure VARCHAR(5) NOT NULL,
                 CONSTRAINT index_horaire_id PRIMARY KEY (id)
 );
-COMMENT ON COLUMN marketPlace.horaire.heure IS 'au format HH:MM sous forme de liste';
+COMMENT ON COLUMN marketPlace.ref_horaire.heure IS 'au format HH:MM sous forme de liste';
 
 
-ALTER SEQUENCE marketPlace.horaire_id_seq OWNED BY marketPlace.horaire.id;
+ALTER SEQUENCE marketPlace.ref_horaire_id_seq OWNED BY marketPlace.ref_horaire.id;
 
 CREATE SEQUENCE marketPlace.ref_categorie_id_seq;
 
 CREATE TABLE marketPlace.ref_categorie (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_categorie_id_seq'),
-                nom VARCHAR(50) NOT NULL,
+                label VARCHAR(50) NOT NULL,
                 photo VARCHAR(255),
-                CONSTRAINT id PRIMARY KEY (id)
+                famille_id INTEGER NOT NULL,
+                CONSTRAINT index_ref_categorieiid PRIMARY KEY (id)
 );
 
 
 ALTER SEQUENCE marketPlace.ref_categorie_id_seq OWNED BY marketPlace.ref_categorie.id;
 
-CREATE SEQUENCE marketPlace.ref_produits_id_seq;
+CREATE SEQUENCE marketPlace.produits_id_seq;
 
-CREATE TABLE marketPlace.ref_produits (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_produits_id_seq'),
+CREATE TABLE marketPlace.produits (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.produits_id_seq'),
                 nom VARCHAR(255) NOT NULL,
-                photo VARCHAR(2555),
+                photo VARCHAR(255),
                 categorie_id INTEGER NOT NULL,
                 CONSTRAINT index_ref_produits_id PRIMARY KEY (id)
 );
 
 
-ALTER SEQUENCE marketPlace.ref_produits_id_seq OWNED BY marketPlace.ref_produits.id;
+ALTER SEQUENCE marketPlace.produits_id_seq OWNED BY marketPlace.produits.id;
 
-CREATE SEQUENCE marketPlace.ref_marche_id_seq;
+CREATE SEQUENCE marketPlace.marches_id_seq;
 
-CREATE TABLE marketPlace.ref_marche (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_marche_id_seq'),
+CREATE TABLE marketPlace.marches (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.marches_id_seq'),
                 nom VARCHAR(255) NOT NULL,
                 photo VARCHAR(255),
+                manifestation_id INTEGER NOT NULL,
+                frequence_id INTEGER NOT NULL,
                 heure_debut_id INTEGER NOT NULL,
                 heure_fin_id INTEGER NOT NULL,
                 adresse_id INTEGER NOT NULL,
-                CONSTRAINT index_ref_marche_id PRIMARY KEY (id)
+                nb_exposant INTEGER,
+                date_debut_id INTEGER NOT NULL,
+                date_fin_id INTEGER,
+                CONSTRAINT index_marche_id PRIMARY KEY (id)
 );
 
 
-ALTER SEQUENCE marketPlace.ref_marche_id_seq OWNED BY marketPlace.ref_marche.id;
+ALTER SEQUENCE marketPlace.marches_id_seq OWNED BY marketPlace.marches.id;
+
+CREATE TABLE marketPlace.jour_marche (
+                id INTEGER NOT NULL,
+                ref_marche_id INTEGER NOT NULL,
+                jours_semaine_id INTEGER NOT NULL,
+                CONSTRAINT index_jour_marche_id PRIMARY KEY (id)
+);
+
 
 CREATE SEQUENCE marketPlace.producteurs_id_seq;
 
@@ -166,12 +247,30 @@ CREATE TABLE marketPlace.producteurs (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.producteurs_id_seq'),
                 nom VARCHAR(50) NOT NULL,
                 photo VARCHAR(255),
+                raison_social VARCHAR(9),
+                num_siren VARCHAR(15),
+                email VARCHAR(255) NOT NULL,
+                description VARCHAR(255),
+                num_telephone_fix VARCHAR(10),
+                num_telephone_portable VARCHAR(10),
+                metier_id INTEGER DEFAULT 1 NOT NULL,
                 adresse_id INTEGER NOT NULL,
+                date_debut_id INTEGER NOT NULL,
+                date_fin_id INTEGER,
                 CONSTRAINT index_producteur_id PRIMARY KEY (id)
 );
 
 
 ALTER SEQUENCE marketPlace.producteurs_id_seq OWNED BY marketPlace.producteurs.id;
+
+CREATE TABLE marketPlace.sederouler (
+                id INTEGER NOT NULL,
+                ref_marche_id INTEGER NOT NULL,
+                date_marche_id INTEGER NOT NULL,
+                producteur_id INTEGER NOT NULL,
+                CONSTRAINT sederouler_pk PRIMARY KEY (id)
+);
+
 
 CREATE SEQUENCE marketPlace.mise_en_vente_id_seq;
 
@@ -191,52 +290,81 @@ CREATE TABLE marketPlace.mise_en_vente (
 
 ALTER SEQUENCE marketPlace.mise_en_vente_id_seq OWNED BY marketPlace.mise_en_vente.id;
 
-CREATE SEQUENCE marketPlace.a_lieu_id_seq;
+ALTER TABLE marketPlace.producteurs ADD CONSTRAINT ref_metier_producteurs_fk
+FOREIGN KEY (metier_id)
+REFERENCES marketPlace.ref_metier (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
-CREATE TABLE marketPlace.a_lieu (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.a_lieu_id_seq'),
-                calendrier_id INTEGER NOT NULL,
-                ref_marche_id INTEGER NOT NULL,
-                mise_en_vente_id INTEGER NOT NULL,
-                CONSTRAINT a_lieu_pk PRIMARY KEY (id)
-);
+ALTER TABLE marketPlace.tickets ADD CONSTRAINT avis_tickets_fk
+FOREIGN KEY (avis_id)
+REFERENCES marketPlace.avis (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
+ALTER TABLE marketPlace.ref_categorie ADD CONSTRAINT famille_ref_categorie_fk
+FOREIGN KEY (famille_id)
+REFERENCES marketPlace.ref_famille (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
-ALTER SEQUENCE marketPlace.a_lieu_id_seq OWNED BY marketPlace.a_lieu.id;
+ALTER TABLE marketPlace.marches ADD CONSTRAINT frequence_ref_marche_fk
+FOREIGN KEY (frequence_id)
+REFERENCES marketPlace.ref_frequence (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE marketPlace.marches ADD CONSTRAINT manifestation_ref_marche_fk
+FOREIGN KEY (manifestation_id)
+REFERENCES marketPlace.ref_manifestation (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE marketPlace.jour_marche ADD CONSTRAINT ref_jours_semaine_jour_marche_fk
+FOREIGN KEY (jours_semaine_id)
+REFERENCES marketPlace.ref_jours_semaine (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
 ALTER TABLE marketPlace.tickets ADD CONSTRAINT type_retrait_tickets_fk
 FOREIGN KEY (type_retrait_id)
-REFERENCES marketPlace.type_retrait (id)
+REFERENCES marketPlace.ref_type_retrait (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE marketPlace.clients ADD CONSTRAINT type_client_clients_fk
 FOREIGN KEY (type_client_id)
-REFERENCES marketPlace.type_client (id)
+REFERENCES marketPlace.ref_type_client (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE marketPlace.clients ADD CONSTRAINT adresse_clients_fk
+FOREIGN KEY (adresse_id)
+REFERENCES marketPlace.adresses (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE marketPlace.producteurs ADD CONSTRAINT adresse_producteurs_fk
 FOREIGN KEY (adresse_id)
-REFERENCES marketPlace.adresse (id)
+REFERENCES marketPlace.adresses (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE
 NOT DEFERRABLE;
 
-ALTER TABLE marketPlace.ref_marche ADD CONSTRAINT adresse_ref_marche_fk
+ALTER TABLE marketPlace.marches ADD CONSTRAINT adresse_ref_marche_fk
 FOREIGN KEY (adresse_id)
-REFERENCES marketPlace.adresse (id)
+REFERENCES marketPlace.adresses (id)
 ON DELETE CASCADE
 ON UPDATE CASCADE
-NOT DEFERRABLE;
-
-ALTER TABLE marketPlace.clients ADD CONSTRAINT adresse_clients_fk
-FOREIGN KEY (adresse_id)
-REFERENCES marketPlace.adresse (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE marketPlace.commande ADD CONSTRAINT clients_commande_fk
@@ -253,28 +381,21 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE marketPlace.a_lieu ADD CONSTRAINT calendrier_a_lieu_fk
-FOREIGN KEY (calendrier_id)
-REFERENCES marketPlace.calendrier (id)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE marketPlace.ref_marche ADD CONSTRAINT refmarche_heure_debut
+ALTER TABLE marketPlace.marches ADD CONSTRAINT refmarche_heure_debut
 FOREIGN KEY (heure_debut_id)
-REFERENCES marketPlace.horaire (id)
+REFERENCES marketPlace.ref_horaire (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE marketPlace.ref_marche ADD CONSTRAINT refmarche_heure_fin
+ALTER TABLE marketPlace.marches ADD CONSTRAINT refmarche_heure_fin
 FOREIGN KEY (heure_fin_id)
-REFERENCES marketPlace.horaire (id)
+REFERENCES marketPlace.ref_horaire (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE marketPlace.ref_produits ADD CONSTRAINT ref_categorie_ref_produits_fk
+ALTER TABLE marketPlace.produits ADD CONSTRAINT ref_categorie_ref_produits_fk
 FOREIGN KEY (categorie_id)
 REFERENCES marketPlace.ref_categorie (id)
 ON DELETE CASCADE
@@ -283,14 +404,21 @@ NOT DEFERRABLE;
 
 ALTER TABLE marketPlace.mise_en_vente ADD CONSTRAINT ref_produits_mise_en_vente_fk
 FOREIGN KEY (produit_id)
-REFERENCES marketPlace.ref_produits (id)
+REFERENCES marketPlace.produits (id)
 ON DELETE NO ACTION
 ON UPDATE CASCADE
 NOT DEFERRABLE;
 
-ALTER TABLE marketPlace.a_lieu ADD CONSTRAINT ref_marche_a_lieu_fk
+ALTER TABLE marketPlace.sederouler ADD CONSTRAINT ref_marche_a_lieu_fk
 FOREIGN KEY (ref_marche_id)
-REFERENCES marketPlace.ref_marche (id)
+REFERENCES marketPlace.marches (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE marketPlace.jour_marche ADD CONSTRAINT frequence_marche_ref_marche_fk
+FOREIGN KEY (ref_marche_id)
+REFERENCES marketPlace.marches (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
@@ -302,9 +430,9 @@ ON DELETE NO ACTION
 ON UPDATE CASCADE
 NOT DEFERRABLE;
 
-ALTER TABLE marketPlace.a_lieu ADD CONSTRAINT mise_en_vente_a_lieu_fk
-FOREIGN KEY (mise_en_vente_id)
-REFERENCES marketPlace.mise_en_vente (id)
+ALTER TABLE marketPlace.sederouler ADD CONSTRAINT producteurs_sederouler_fk
+FOREIGN KEY (producteur_id)
+REFERENCES marketPlace.producteurs (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;

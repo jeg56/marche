@@ -1,7 +1,3 @@
---- Insert ref_categorie
-INSERT INTO marketPlace.ref_categorie(label,famille_id) VALUES ('Salade',2);
-INSERT INTO marketPlace.ref_categorie(label,famille_id) VALUES ('Pommes de terre',2);
-INSERT INTO marketPlace.ref_categorie(label,famille_id) VALUES ('Carotte',2);
 
 --- Insert ref_famille
 INSERT INTO marketPlace.ref_famille(label) VALUES ('Fruits');
@@ -16,82 +12,124 @@ INSERT INTO marketPlace.ref_famille(label) VALUES ('Epicerie sucrée');
 INSERT INTO marketPlace.ref_famille(label) VALUES ('Boissons');
 INSERT INTO marketPlace.ref_famille(label) VALUES ('Plats traiteurs');
 
+--- Insert ref_categorie
+INSERT INTO marketPlace.ref_categorie(label,famille_id) VALUES ('Salade',2);
+INSERT INTO marketPlace.ref_categorie(label,famille_id) VALUES ('Pommes de terre',2);
+INSERT INTO marketPlace.ref_categorie(label,famille_id) VALUES ('Carotte',2);
 
---- Insert ref_produits
-INSERT INTO marketPlace.ref_produits(nom,categorie_id) VALUES ('Laitue',1);
-INSERT INTO marketPlace.ref_produits(nom,categorie_id) VALUES ('Batavia',1);
-INSERT INTO marketPlace.ref_produits(nom,categorie_id) VALUES ('Feuille de chêne',1);
-INSERT INTO marketPlace.ref_produits(nom,categorie_id) VALUES ('Ambo',2);
-INSERT INTO marketPlace.ref_produits(nom,categorie_id) VALUES ('BalmoraCarrl',2);
-INSERT INTO marketPlace.ref_produits(nom,categorie_id) VALUES ('Carrote Touchon',3);
 
---- Insert type_retrait 
-INSERT INTO marketPlace.type_retrait(label) VALUES('Sur le marché');
-INSERT INTO marketPlace.type_retrait(label) VALUES('Chez le producteur');
 
---- Insert type_client
-INSERT INTO marketPlace.type_client(label) VALUES('Particulier');
-INSERT INTO marketPlace.type_client(label) VALUES('Professionnel');
+--- Insert produits
+INSERT INTO marketPlace.produits(nom,categorie_id) VALUES ('Laitue',1);
+INSERT INTO marketPlace.produits(nom,categorie_id) VALUES ('Batavia',1);
+INSERT INTO marketPlace.produits(nom,categorie_id) VALUES ('Feuille de chêne',1);
+INSERT INTO marketPlace.produits(nom,categorie_id) VALUES ('Ambo',2);
+INSERT INTO marketPlace.produits(nom,categorie_id) VALUES ('BalmoraCarrl',2);
+INSERT INTO marketPlace.produits(nom,categorie_id) VALUES ('Carrote Touchon',3);
 
---- Insert tikets
+--- Insert mise en vente
 --- via la console admin
 
+--- Insert ref_type_retrait 
+INSERT INTO marketPlace.ref_type_retrait(label) VALUES('Sur le marché');
+INSERT INTO marketPlace.ref_type_retrait(label) VALUES('Chez le producteur');
+
+--- Insert ref_type_client
+INSERT INTO marketPlace.ref_type_client(label) VALUES('Particulier');
+INSERT INTO marketPlace.ref_type_client(label) VALUES('Professionnel');
+
+--- Insert tickets
+--- via la console admin
+
+INSERT INTO marketPlace.avis(avis,note) VALUES('',0);
+
 --- Insert adresse
-INSERT INTO marketPlace.adresse(adresse,cp,ville,latitude,longitude) VALUES('place de la mairie','35410','Ossé',48.0463,-1.5044);
-INSERT INTO marketPlace.adresse(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35410','Châteaugiron',48.0423764,-1.500912);
+INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place de la mairie','35410','Ossé',48.0463,-1.5044);
+INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35410','Châteaugiron',48.0423764,-1.500912);
 
-INSERT INTO marketPlace.adresse(adresse,cp,ville,latitude,longitude) VALUES('place de la mairie','35113','Domagné',48.0706593,-1.3918429);
-INSERT INTO marketPlace.adresse(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35150','Janzé',47.9556915,-1.495366);
-INSERT INTO marketPlace.adresse(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35410','Domloup',48.0630976,-1.523711);
+INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place de la mairie','35113','Domagné',48.0706593,-1.3918429);
+INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35150','Janzé',47.9556915,-1.495366);
+INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35410','Domloup',48.0630976,-1.523711);
+
+INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('7 allé konrad','35410','Ossé',48.0630974,-1.523711);
 
 
 
---- Insert horaire
-INSERT INTO marketPlace.horaire(heure) VALUES('07:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('07:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('08:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('08:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('09:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('09:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('10:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('10:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('11:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('11:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('12:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('12:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('13:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('13:30');
-INSERT INTO marketPlace.horaire(heure) VALUES('14:00');
-INSERT INTO marketPlace.horaire(heure) VALUES('14:30');
 
+--- Insert clients
+INSERT INTO marketplace.clients(prenom,nom, email,type_client_id, num_telephone_portable, photo,adresse_id) 
+    VALUES ('Arnaud','Jégoux', 'tata@gmail.com', 1,null , null,6);
+
+
+
+
+
+
+--- Insert ref_horaire
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('07:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('07:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('08:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('08:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('09:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('09:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('10:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('10:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('11:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('11:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('12:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('12:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('13:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('13:30');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('14:00');
+INSERT INTO marketPlace.ref_horaire(heure) VALUES('14:30');
+
+
+--- Insert manifestation
+INSERT INTO marketPlace.ref_manifestation(label)VALUES ('Marché');
+INSERT INTO marketPlace.ref_manifestation(label) VALUES ('Foire');
+INSERT INTO marketPlace.ref_manifestation(label) VALUES ('Braderie');
+
+--- Insert fréquence
+INSERT INTO marketPlace.ref_frequence(label) VALUES ('Quotidien');
+INSERT INTO marketPlace.ref_frequence(label) VALUES ('Hebdomadaire');
+INSERT INTO marketPlace.ref_frequence(label) VALUES ('Bi-mensuelle');
+INSERT INTO marketPlace.ref_frequence(label) VALUES ('Mensuelle');
+INSERT INTO marketPlace.ref_frequence(label) VALUES ('Trimestrielle');
+INSERT INTO marketPlace.ref_frequence(label) VALUES ('Annuelle');
 
 
 --- Insert ref_marche
-INSERT INTO marketPlace.ref_marche(nom,heure_debut_id,heure_fin_id,adresse_id) VALUES('Ossé',1,13,1);
-INSERT INTO marketPlace.ref_marche(nom,heure_debut_id,heure_fin_id,adresse_id) VALUES('Chateaugiron',4,15,2);
+INSERT INTO marketplace.marches( nom, photo, manifestation_id, frequence_id,heure_debut_id,heure_fin_id, adresse_id, nb_exposant, date_debut_id, date_fin_id)
+    VALUES ('Ossé', null, 1, 1, 1, 13, 1, null, 1, null);
+INSERT INTO marketplace.marches( nom, photo, manifestation_id, frequence_id,heure_debut_id,heure_fin_id, adresse_id, nb_exposant, date_debut_id, date_fin_id)
+    VALUES ('Chateaugiron', null, 1, 1, 4, 15, 2, null, 1, null);
 
+
+--- Insert ref_metier
+INSERT INTO marketPlace.ref_metier(label) VALUES ('NR');
+INSERT INTO marketPlace.ref_metier(label) VALUES ('Maraicher');
+INSERT INTO marketPlace.ref_metier(label) VALUES ('Ostréculteur');
+INSERT INTO marketPlace.ref_metier(label) VALUES ('Fromager');
 
 --- Insert producteurs
-INSERT INTO marketPlace.producteurs(nom,adresse_id) VALUES ('Jean-Marc',3);
-INSERT INTO marketPlace.producteurs(nom,adresse_id) VALUES ('Gérard',4);
-INSERT INTO marketPlace.producteurs(nom,adresse_id) VALUES ('Michel',5);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Jean-Marc', null, null, null, 'Jean-Marc@gmail.fr', null,null, null, 1, 3, 1, null);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Gérard', null, null, null, 'Gérard@gmail.fr', 'Maraicher depuis 20 ans',null, null, 2, 4, 1, null);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Martine', null, null, null, 'Martine@gmail.fr', 'Femme de philippe',null, null, 4, 5, 1, null);
+    INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Philippe', null, null, null, 'Philippe@gmail.fr', 'Mari de philippe',null, null, 4, 5, 1, null);
 
 --- Insert jour de la semaine
-INSERT INTO marketPlace.jours_semaine(jours)VALUES ('Lundi');
-INSERT INTO marketPlace.jours_semaine(jours) VALUES ('Mardi');
-INSERT INTO marketPlace.jours_semaine(jours) VALUES ('Mercredi');
-INSERT INTO marketPlace.jours_semaine(jours) VALUES ('Jeudi');
-INSERT INTO marketPlace.jours_semaine(jours) VALUES ('Vendredi');
-INSERT INTO marketPlace.jours_semaine(jours) VALUES ('Samedi');
-INSERT INTO marketPlace.jours_semaine(jours) VALUES ('Dimanche');
+INSERT INTO marketPlace.ref_jours_semaine(jours)VALUES ('Lundi');
+INSERT INTO marketPlace.ref_jours_semaine(jours) VALUES ('Mardi');
+INSERT INTO marketPlace.ref_jours_semaine(jours) VALUES ('Mercredi');
+INSERT INTO marketPlace.ref_jours_semaine(jours) VALUES ('Jeudi');
+INSERT INTO marketPlace.ref_jours_semaine(jours) VALUES ('Vendredi');
+INSERT INTO marketPlace.ref_jours_semaine(jours) VALUES ('Samedi');
+INSERT INTO marketPlace.ref_jours_semaine(jours) VALUES ('Dimanche');
 
---- Insert fréquence
-INSERT INTO marketPlace.frequence(label) VALUES ('Quotidien');
-INSERT INTO marketPlace.frequence(label) VALUES ('Hebdomadaire');
-INSERT INTO marketPlace.frequence(label) VALUES ('Bi-mensuelle');
-INSERT INTO marketPlace.frequence(label) VALUES ('Mensuelle');
-INSERT INTO marketPlace.frequence(label) VALUES ('Trimestrielle');
-INSERT INTO marketPlace.frequence(label) VALUES ('Annuelle');
 
 
 
@@ -122,7 +160,3 @@ SELECT
       GROUP BY SEQUENCE.DAY) DQ
 ORDER BY 1;
 
---- Insert manifestation
-INSERT INTO marketPlace.manifestation(label)VALUES ('Marché');
-INSERT INTO marketPlace.manifestation(label) VALUES ('Foire');
-INSERT INTO marketPlace.manifestation(label) VALUES ('Braderie');
