@@ -1,4 +1,20 @@
 
+CREATE SEQUENCE marketPlace.connexions_id_seq;
+
+CREATE TABLE marketPlace.connexions (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.connexions_id_seq'),
+                identifiant VARCHAR(25) NOT NULL,
+                password VARCHAR(25) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                opt_in INTEGER DEFAULT 1 NOT NULL,
+                num_random VARCHAR(20) NOT NULL,
+                etat_connexion BOOLEAN DEFAULT False NOT NULL,
+                CONSTRAINT index_connexions_id PRIMARY KEY (id)
+);
+
+
+ALTER SEQUENCE marketPlace.connexions_id_seq OWNED BY marketPlace.connexions.id;
+
 CREATE SEQUENCE marketPlace.ref_metier_id_seq;
 
 CREATE TABLE marketPlace.ref_metier (
@@ -14,7 +30,7 @@ CREATE SEQUENCE marketPlace.avis_id_seq;
 
 CREATE TABLE marketPlace.avis (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.avis_id_seq'),
-                avis VARCHAR,
+                avis VARCHAR(255),
                 note INTEGER NOT NULL,
                 CONSTRAINT index_avis_id PRIMARY KEY (id)
 );
@@ -111,8 +127,7 @@ CREATE TABLE marketPlace.clients (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.clients_id_seq'),
                 nom VARCHAR(255) NOT NULL,
                 prenom VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL,
-                etat_email BOOLEAN DEFAULT False NOT NULL,
+                connexion_id INTEGER,
                 type_client_id INTEGER NOT NULL,
                 num_telephone_portable VARCHAR(10),
                 photo VARCHAR(255),
@@ -249,7 +264,7 @@ CREATE TABLE marketPlace.producteurs (
                 photo VARCHAR(255),
                 raison_social VARCHAR(9),
                 num_siren VARCHAR(15),
-                email VARCHAR(255) NOT NULL,
+                connexions_id INTEGER,
                 description VARCHAR(255),
                 num_telephone_fix VARCHAR(10),
                 num_telephone_portable VARCHAR(10),
@@ -289,6 +304,20 @@ CREATE TABLE marketPlace.mise_en_vente (
 
 
 ALTER SEQUENCE marketPlace.mise_en_vente_id_seq OWNED BY marketPlace.mise_en_vente.id;
+
+ALTER TABLE marketPlace.producteurs ADD CONSTRAINT connexions_producteurs_fk
+FOREIGN KEY (connexions_id)
+REFERENCES marketPlace.connexions (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE marketPlace.clients ADD CONSTRAINT connexions_clients_fk
+FOREIGN KEY (connexion_id)
+REFERENCES marketPlace.connexions (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
 ALTER TABLE marketPlace.producteurs ADD CONSTRAINT ref_metier_producteurs_fk
 FOREIGN KEY (metier_id)

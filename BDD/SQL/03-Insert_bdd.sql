@@ -57,8 +57,8 @@ INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('7 
 
 
 --- Insert clients
-INSERT INTO marketplace.clients(prenom,nom, email,type_client_id, num_telephone_portable, photo,adresse_id) 
-    VALUES ('Arnaud','Jégoux', 'tata@gmail.com', 1,null , null,6);
+INSERT INTO marketplace.clients(prenom,nom,type_client_id, num_telephone_portable, photo,adresse_id) 
+    VALUES ('Arnaud','Jégoux', 1,null , null,6);
 
 
 
@@ -112,14 +112,14 @@ INSERT INTO marketPlace.ref_metier(label) VALUES ('Ostréculteur');
 INSERT INTO marketPlace.ref_metier(label) VALUES ('Fromager');
 
 --- Insert producteurs
-INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
-    VALUES ('Jean-Marc', null, null, null, 'Jean-Marc@gmail.fr', null,null, null, 1, 3, 1, null);
-INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
-    VALUES ('Gérard', null, null, null, 'Gérard@gmail.fr', 'Maraicher depuis 20 ans',null, null, 2, 4, 1, null);
-INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
-    VALUES ('Martine', null, null, null, 'Martine@gmail.fr', 'Femme de philippe',null, null, 4, 5, 1, null);
-    INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, email, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
-    VALUES ('Philippe', null, null, null, 'Philippe@gmail.fr', 'Mari de philippe',null, null, 4, 5, 1, null);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Jean-Marc', null, null, null,  null,null, null, 1, 3, 1, null);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren, description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Gérard', null, null, null, 'Maraicher depuis 20 ans',null, null, 2, 4, 1, null);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren,description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Martine', null, null, null,  'Femme de philippe',null, null, 4, 5, 1, null);
+INSERT INTO marketplace.producteurs(nom, photo, raison_social, num_siren,  description, num_telephone_fix, num_telephone_portable, metier_id, adresse_id, date_debut_id, date_fin_id)
+    VALUES ('Philippe', null, null, null,  'Mari de philippe',null, null, 4, 5, 1, null);
 
 --- Insert jour de la semaine
 INSERT INTO marketPlace.ref_jours_semaine(jours)VALUES ('Lundi');

@@ -1,6 +1,6 @@
 class RefMarche(models.Model):
-    heure_debut = models.ForeignKey(Horaire, models.DO_NOTHING, related_name='heure_debut')
-    heure_fin = models.ForeignKey(Horaire, models.DO_NOTHING,related_name='heure_fin')
+    heure_debut = models.ForeignKey('RefHoraire', models.DO_NOTHING, related_name='heure_debut')
+    heure_fin = models.ForeignKey('RefHoraire', models.DO_NOTHING ,related_name='heure_fin')
 
         verbose_name = "Marché"
         

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/marketplace.css' %}" />
+
+
+  </head>
+  <body>
+zzzzzzzzzzzzzzzzzzzzzzzzzz
+
+
+
+    <div class="container">
+      <div class="row">
+        <div class="box">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- jQuery -->
+    <script src="{% static 'marketPlace/js/jquery-3.4.1.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'marketPlace/js/bootstrap.min.js' %}"></script>
+        <!-- <script src="{% static 'marketPlace/js/test.js' %}"></script>-->
+    
+
+  </body>
+</html>

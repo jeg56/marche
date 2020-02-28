@@ -24,6 +24,8 @@ from market import views
 
 urlpatterns = [
     url(r'^$', views.index),
+
+    url(r'^connexion/', include(('connexion.urls', 'connexion'), namespace='connexion')),
     path('market/', include('market.urls')),
     path('admin/', admin.site.urls),
 ]
