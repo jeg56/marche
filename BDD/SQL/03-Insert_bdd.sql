@@ -44,6 +44,7 @@ INSERT INTO marketPlace.ref_type_client(label) VALUES('Professionnel');
 INSERT INTO marketPlace.avis(avis,note) VALUES('',0);
 
 --- Insert adresse
+INSERT INTO marketPlace.adresses(adresse,cp,ville) VALUES('A renseigner','-','-');
 INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place de la mairie','35410','Ossé',48.0463,-1.5044);
 INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('place des halles','35410','Châteaugiron',48.0423764,-1.500912);
 
@@ -59,7 +60,6 @@ INSERT INTO marketPlace.adresses(adresse,cp,ville,latitude,longitude) VALUES('7 
 --- Insert clients
 INSERT INTO marketplace.clients(prenom,nom,type_client_id, num_telephone_portable, photo,adresse_id) 
     VALUES ('Arnaud','Jégoux', 1,null , null,6);
-
 
 
 

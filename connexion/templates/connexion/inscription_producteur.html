@@ -18,24 +18,33 @@
     <form class="form-inline" action="{% url 'connexion:inscription_producteur'  %}" method="post">
         {% csrf_token %}
 
-        <div class="form-group  {% if form.identifiant.errors %}has-warning has-feedback{% endif %}">
-            <label for="identifiant" class="control-label">Identifiant </label>
-            <input type="text" name="identifiant" value="" id="identifiant">
+        <div class="container row form-group  {% if form.identifiant.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ form.identifiant.id_for_label }}"> {{ form.identifiant.label }} : </label>
+            <span class="col-sm">{{ form.identifiant }} </span>
         </div>
-        <div class="form-group  {% if form.password.errors %}has-warning has-feedback{% endif %}">
-            <label for="password" class="control-label">Identifiant </label>
-            <input type="password" name="password" value="" id="password">
+
+        <div class="container row form-group  {% if form.password.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ form.password.id_for_label }} ">{{ form.password.label }} : </label> 
+            <span class="col-sm">{{form.password}}</span>
         </div>
-        <div class="form-group  {% if form.email.errors %}has-warning has-feedback{% endif %}">
-            <label for="email" class="control-label">E-mail</label>
-            <input type="text" name="email" value="" id="email">
+
+
+  <div class="container row form-group {% if form.repassword.errors %}has-warning has-feedback{% endif %}" >
+    <label for="repassword" class="col-sm">Entrer de nouveau votre mot de passe</label>
+    <span class="col-sm"><input type="password" class="form-control" name="repassword" value="" id="repassword"></span>
+  </div>
+
+        <div class="container row form-group  {% if form.email.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ form.email.id_for_label }}">{{ form.email.label }} : </label> 
+            <span class="col-sm">{{ form.email }}</span>
         </div>
-        <div class="form-group  {% if form.opt_in.errors %}has-warning has-feedback{% endif %}">
-            <label for="opt_in" class="control-label">Optin</label>
-            <input type="text" name="opt_in" value="" id="opt_in">
+
+        <div class="container row form-group  {% if form.opt_in.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ form.opt_in.id_for_label }}">{{ form.opt_in.label }} : </label> 
+            <span class="col-sm">{{ form.opt_in }}</span>
         </div>
         
-        <div class="container ">
+        <div class="container">
             <button type="submit" class="btn btn-success">S'inscrire</button>
         </div>
     </form>
@@ -44,11 +53,10 @@
 
 
 {% if errors %}
-ssssssssssssssssssssssssssssssssssssssssssss
 <div>
   {% for key, error in errors %}
   {% autoescape off %}
-   {{key}} : {{ error }}
+   {{ error }}
   {% endautoescape %}
   {% endfor %}
 </div>

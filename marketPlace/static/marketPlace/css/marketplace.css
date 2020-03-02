@@ -231,10 +231,20 @@ footer p {
   color: red;
 }
 
-.errorlist {
-  margin: 10px auto;
+
+
+
+html body div.container div.row div.box form.form-inline div.container.row.form-group label.col-sm{
+    justify-content: right;
+
 }
 
-.errorlist .error {
-  color: red;
+.errorlist {
+    margin: 10px auto;
+    color: red;
+  }
+
+.errorMessage{
+    margin: 10px auto;
+    color: red;
 }

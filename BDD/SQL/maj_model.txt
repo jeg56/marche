@@ -20,3 +20,6 @@ class Horaire(models.Model):
 class JoursSemaine(models.Model):
     def __str__(self):
         return self.jours
+
+class Connexions(models.Model):
+    etat_connexion = models.BooleanField(initial=False)

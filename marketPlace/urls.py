@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', views.index),
 
     url(r'^connexion/', include(('connexion.urls', 'connexion'), namespace='connexion')),
+    url(r'^producteur/', include(('producteur.urls', 'producteur'), namespace='producteur')),
     path('market/', include('market.urls')),
     path('admin/', admin.site.urls),
 ]

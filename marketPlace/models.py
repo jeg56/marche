@@ -76,11 +76,11 @@ class Commande(models.Model):
 
 class Connexions(models.Model):
     identifiant = models.CharField(max_length=25)
-    password = models.CharField(max_length=25)
+    password = models.CharField(max_length=255, verbose_name=u"Mot de passe")
     email = models.CharField(max_length=255)
     opt_in = models.IntegerField()
-    num_random = models.CharField(max_length=20)
-    etat_connexion = models.BooleanField()
+    num_random = models.CharField(max_length=255)
+    etat_connexion = models.BooleanField(default=False)
 
     class Meta:
         managed = False

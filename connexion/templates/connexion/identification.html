@@ -18,19 +18,31 @@
     <form class="form-inline" action="{% url 'connexion:identification'  %}" method="post">
         {% csrf_token %}
     
-        <div class="form-group  {% if form.name.errors %}has-warning has-feedback{% endif %}">
-            <label for="name" class="control-label">Nom</label>
-            <input type="text" name="name" value="" id="name">
+        <div class="container row form-group  {% if form.identifiant.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ form.identifiant.id_for_label }}"> {{ form.identifiant.label }} : </label>
+            <span class="col-sm">{{ form.identifiant }} </span>
         </div>
-        <div class="form-group">
-            <label for="email" class="control-label">E-mail</label>
-            <input type="text" name="email" value="" id="email">
+
+        <div class="container row form-group  {% if form.password.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ form.password.id_for_label }} ">{{ form.password.label }} : </label> 
+            <span class="col-sm">{{form.password}}</span>
         </div>
 
         
         <div class="container ">
-            <button type="submit" class="btn btn-success">S'inscrire</button>
+            <button type="submit" class="btn btn-success">S'identifier</button>
         </div>
     </form>
 
+
+
+{% if errors %}
+<div>
+  {% for key, error in errors %}
+  {% autoescape off %}
+   {{ error }}
+  {% endautoescape %}
+  {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

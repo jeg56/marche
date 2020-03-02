@@ -4,11 +4,11 @@ CREATE SEQUENCE marketPlace.connexions_id_seq;
 CREATE TABLE marketPlace.connexions (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.connexions_id_seq'),
                 identifiant VARCHAR(25) NOT NULL,
-                password VARCHAR(25) NOT NULL,
+                password VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 opt_in INTEGER DEFAULT 1 NOT NULL,
                 num_random VARCHAR(20) NOT NULL,
-                etat_connexion BOOLEAN DEFAULT False NOT NULL,
+                etat_connexion BOOLEAN DEFAULT false NOT NULL,
                 CONSTRAINT index_connexions_id PRIMARY KEY (id)
 );
 
