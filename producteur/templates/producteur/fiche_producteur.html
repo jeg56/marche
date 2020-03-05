@@ -1,13 +1,21 @@
 {% extends 'marketPlace/base.html' %}
-
-
+vvv
 
 
 {% block content %}
 
 
+    {% if request.session.identifiant %}
+        <p> Vous êtes connecté {{request.session.identifiant}} </p>
+  
+    {% else %}
+    <p> <a href="{% url 'connexion:identification' %}"> Identifiez-vous</a></p>
+      
+    {% endif %}
+
+ 
     <hr> 
-        <h1 class="intro-text text-center">{{ title }}</h1>       
+        <h1 id='fiche_producteur' name='fiche_producteur'  class="intro-text text-center">{{ title }} {{ producteur.nom }}  </h1>       
     <hr class="detail-separator">
 
 
@@ -15,15 +23,44 @@
      <p>{{message}} </p>
     {% endif %}
 
-    {{ producteur.nom }}
+
+    
 
     <form class="form-inline" action="{% url 'producteur:fiche_producteur' id=producteur.id %}" method="post">
         {% csrf_token %}
 
-        
-        <div class="container ">
-            <button type="submit" class="btn btn-success">S'identifier</button>
+
+    {% for e in form %}
+        <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
+            <label class="col-sm" for="{{ e.id_for_label }}"> 
+                {{ e.label }} {% if e.field.label_suffix %} <span class='asterix' margin => {{e.field.label_suffix}} </span> {% endif %} : 
+            </label>
+            <span class="col-sm">{{ e }} </span>
         </div>
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {% if request.session.identifiant %}
+            <div class="container ">
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+  
+        {% endif %}
+  
+
     </form>
 
 

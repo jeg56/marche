@@ -248,3 +248,8 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     margin: 10px auto;
     color: red;
 }
+
+.asterix{
+    color:red;
+    margin:5px
+}

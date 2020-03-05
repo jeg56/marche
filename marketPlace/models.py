@@ -16,7 +16,6 @@ class Adresses(models.Model):
     longitude = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'adresses'
 
 
@@ -83,7 +82,6 @@ class Connexions(models.Model):
     etat_connexion = models.BooleanField(default=False)
 
     class Meta:
-        managed = False
         db_table = 'connexions'
 
 
@@ -144,7 +142,6 @@ class Producteurs(models.Model):
     date_fin_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'producteurs'
 
 
@@ -212,7 +209,6 @@ class RefMetier(models.Model):
     label = models.CharField(max_length=50)
 
     class Meta:
-        managed = False
         db_table = 'ref_metier'
 
 

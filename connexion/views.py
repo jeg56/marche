@@ -12,10 +12,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
+from django.db import transaction
+from django.urls import reverse
+from .fonctionnalites.proposition_identifiants import proposition_identifiants
 
 def identification(request):
     context = {
-        'title': 'Mon super titre'
+        'title': 'Identification'
         }
     context['form']=IdentificationProducteurForm()
     if request.method == 'POST':
@@ -25,6 +28,7 @@ def identification(request):
             password = form.cleaned_data['password']
             
             connexion = Connexions.objects.filter(identifiant=identifiant)
+            
             if connexion.exists():
                 if connexion.first().etat_connexion==False:
                     context['message']= 'Vous n''avez pas activé votre compte en cliquant sur le lien dans l''email'
@@ -32,7 +36,10 @@ def identification(request):
                 else :
                     valid_password = crypt.crypt(password, connexion.first().password) == connexion.first().password
                     if(valid_password) :
-                        return HttpResponseRedirect('/producteur/{}'.format(Producteurs.objects.get(connexions_id=connexion.first().id).id))
+                        #return HttpResponseRedirect('/producteur/{}'.format(Producteurs.objects.get(connexions_id=connexion.first().id).id))
+                        request.session['identifiant'] = connexion.first().identifiant
+                        request.session['id'] = connexion.first().id  
+                        return HttpResponseRedirect(reverse('producteur:fiche_producteur', args=(int(Producteurs.objects.get(connexions_id=connexion.first().id).id),)))
                       
                     else:
                         form.add_error('password', 'Identification invalide')
@@ -49,7 +56,6 @@ def identification(request):
 
 
 def inscription_producteur(request):
-
     context = {
         'title': 'Formulaire d\'inscription des producteurs',
         'message': None,
@@ -71,8 +77,9 @@ def inscription_producteur(request):
 
 
 
-            connexion = Connexions.objects.filter(email=email,etat_connexion=True)
-            if not connexion.exists() and repassword == password:
+            rechercheMailExistant = Connexions.objects.filter(email=email,etat_connexion=True)
+            rechercheIdentifiantExistant = Connexions.objects.filter(identifiant=identifiant,etat_connexion=True)
+            if not rechercheMailExistant.exists() and not rechercheIdentifiantExistant.exists() and repassword == password :
                 lettersAndDigits = string.ascii_letters + string.digits
                 lettersAndDigits_20=''.join(random.choice(lettersAndDigits) for i in range(20))
 
@@ -101,8 +108,7 @@ def inscription_producteur(request):
                 try:
           
                     server.sendmail('mylittelmarkel@gmail.com',email,msg.as_string())
-                    
-                    print("mail envoyé ")
+
                 except smtplib.SMTPException as e:
                     print(e)
                 server.quit()
@@ -121,8 +127,11 @@ def inscription_producteur(request):
             else:
                 if repassword != password:
                     form.add_error('repassword', 'Mot de passe différent')
-                if connexion.exists():
+                if rechercheMailExistant.exists():
                     form.add_error('email', 'Cette adresse email est déjà utilisée.' )
+                if rechercheIdentifiantExistant.exists():
+                    print(','.join(proposition_identifiants(identifiant)))
+                    form.add_error('identifiant', 'Cet identifiant existe déjà... Vous pouvez utilisez un de ces identifiants : {}'. format( ', '.join(proposition_identifiants(identifiant))))
                 
                 context['errors'] = form.errors.items()
         else:
@@ -135,11 +144,15 @@ def inscription_producteur(request):
     return render(request, 'connexion/inscription_producteur.html', context)
     
 
+
+
+
+@transaction.atomic
 def inscription_valider(request,id):
     context = {
         'title': 'Formulaire d\'inscription des producteurs',
         }
-
+    
     connexion = Connexions.objects.filter(num_random=id,etat_connexion=False)
 
     if connexion.exists():

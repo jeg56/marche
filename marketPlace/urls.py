@@ -19,19 +19,22 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 
-from market import views
-
+from marketPlace import views as marketPlace_views
+from django.conf.urls import handler404, handler500
+from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$', views.index),
-
     url(r'^connexion/', include(('connexion.urls', 'connexion'), namespace='connexion')),
     url(r'^producteur/', include(('producteur.urls', 'producteur'), namespace='producteur')),
     path('market/', include('market.urls')),
     path('admin/', admin.site.urls),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
+
+
+handler404 = marketPlace_views.handler404
+handler500 = marketPlace_views.handler500
 
 if settings.DEBUG:
     import debug_toolbar
