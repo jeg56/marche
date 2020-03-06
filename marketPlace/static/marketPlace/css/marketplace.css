@@ -253,3 +253,8 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     color:red;
     margin:5px
 }
+
+.avatar {
+    vertical-align: middle;
+    border-radius: 50%;
+  }

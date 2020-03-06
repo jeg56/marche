@@ -6,7 +6,9 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+import datetime
 
 class Adresses(models.Model):
     adresse = models.CharField(max_length=255)
@@ -126,14 +128,27 @@ class MiseEnVente(models.Model):
         managed = False
         db_table = 'mise_en_vente'
 
+image_storage = FileSystemStorage(
+    # Physical file location ROOT
+    location=u'{0}/producteurs/'.format(settings.MEDIA_ROOT),
+    # Url for file
+    base_url=u'{0}/producteurs/'.format(settings.MEDIA_URL),
+)
+
+
+def image_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/my_sell/picture/<filename>
+    dateYYYYMMJJ_HH_MM_SS=datetime.datetime.now().strftime('%Y%m%d_%H_%M_%S.%f')
+    #print(instance.nom)
+    return u'{0}-{1}'.format(dateYYYYMMJJ_HH_MM_SS,filename)
 
 class Producteurs(models.Model):
     nom = models.CharField(max_length=50)
-    photo = models.CharField(max_length=255, blank=True, null=True)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage)
     raison_social = models.CharField(max_length=9, blank=True, null=True)
     num_siren = models.CharField(max_length=15, blank=True, null=True)
     connexions = models.ForeignKey(Connexions, models.DO_NOTHING, blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     num_telephone_fix = models.CharField(max_length=10, blank=True, null=True)
     num_telephone_portable = models.CharField(max_length=10, blank=True, null=True)
     metier = models.ForeignKey('RefMetier', models.DO_NOTHING)

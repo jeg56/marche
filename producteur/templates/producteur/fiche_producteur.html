@@ -26,20 +26,31 @@ vvv
 
     
 
-    <form class="form-inline" action="{% url 'producteur:fiche_producteur' id=producteur.id %}" method="post">
+    <form class="form-inline" action="{% url 'producteur:fiche_producteur' id=producteur.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-
-    {% for e in form %}
-        <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
-            <label class="col-sm" for="{{ e.id_for_label }}"> 
-                {{ e.label }} {% if e.field.label_suffix %} <span class='asterix' margin => {{e.field.label_suffix}} </span> {% endif %} : 
-            </label>
-            <span class="col-sm">{{ e }} </span>
-        </div>
-
-    {% endfor %}
-
+  <div class="card" style="width:400px">
+    {% if producteur.photo  %} 
+        <img class="card-img-top avatar" src="{{producteur.photo.url}}" alt="Card image" style="width:100%">
+     {% endif %} 
+    <div class="card-body">
+        <h4 class="card-title">{{producteur.nom}}</h4>
+        {% if producteur.metier %} <p class="card-text">{{producteur.metier.label}}</p>   {% endif %}
+        {% if producteur.description %} <p class="card-text">{{producteur.description}}</p>    {% endif %}
+        <p><a href="#" class="btn btn-primary">Voir mes produits</a></p>
+        <p><a href="#" class="btn btn-primary">Voir mes jours de marchés</a></p>
+    </div>
+  </div>
+    {% if identifie  %} 
+        {% for e in form %}
+                <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
+                    <label class="col-sm" for="{{ e.id_for_label }} "> 
+                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
+                    </label>
+                    <span class="col-sm">{{ e }} </span>
+                </div>
+        {% endfor %}
+    {% endif %} 
 
 
 

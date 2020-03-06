@@ -13,6 +13,7 @@ class ConnexionProducteurForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'opt_in': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+        
 class IdentificationProducteurForm(forms.ModelForm):
     class Meta:
         model = Connexions
