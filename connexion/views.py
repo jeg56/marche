@@ -15,6 +15,9 @@ from django.shortcuts import redirect
 from django.db import transaction
 from django.urls import reverse
 from .fonctionnalites.proposition_identifiants import proposition_identifiants
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 
 def identification(request):
     context = {
@@ -39,6 +42,14 @@ def identification(request):
                         #return HttpResponseRedirect('/producteur/{}'.format(Producteurs.objects.get(connexions_id=connexion.first().id).id))
                         request.session['identifiant'] = connexion.first().identifiant
                         request.session['id'] = connexion.first().id  
+
+                        #Authentification Django
+                        user = authenticate(username=identifiant, password=password)
+     
+                        if user is not None:
+                            login(request, user)
+
+
                         return HttpResponseRedirect(reverse('producteur:fiche_producteur', args=(int(Producteurs.objects.get(connexions_id=connexion.first().id).id),)))
                       
                     else:
@@ -117,10 +128,17 @@ def inscription_producteur(request):
                     identifiant=identifiant,
                     password=password_hash,
                     email=email,
-                    opt_in=opt_in,
+                    opt_in=1 if opt_in=='on' else  0,
                     num_random=lettersAndDigits_20
                 )
                 connexion.save()
+
+                #Sécurité Django
+                user = User.objects.create_user(connexion.identifiant, connexion.email, password)
+
+
+
+
                 context['message'] = "Merci de valider votre inscription en cliquant sur le lien que vous avez recu dans votre boite mail {} " .format(email)
                 return render(request, 'connexion/identification.html', context)
 
@@ -130,12 +148,11 @@ def inscription_producteur(request):
                 if rechercheMailExistant.exists():
                     form.add_error('email', 'Cette adresse email est déjà utilisée.' )
                 if rechercheIdentifiantExistant.exists():
-                    print(','.join(proposition_identifiants(identifiant)))
                     form.add_error('identifiant', 'Cet identifiant existe déjà... Vous pouvez utilisez un de ces identifiants : {}'. format( ', '.join(proposition_identifiants(identifiant))))
                 
                 context['errors'] = form.errors.items()
         else:
-            print(" -------------------- Error"+ form.errors.items())
+
             
             context['errors'] = form.errors.items()
 
@@ -160,6 +177,7 @@ def inscription_valider(request,id):
         adresse=Adresses.objects.get(pk=1)
         producteurs = Producteurs.objects.create(nom='-',metier=metier,adresse=adresse,connexions_id=connexion.first().id,date_debut_id=1)
         producteurs.save()
+        
 
         for item in connexion:
             item.etat_connexion=True

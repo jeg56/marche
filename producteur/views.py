@@ -4,8 +4,12 @@ from .forms import FicheProducteurForm,ParagraphErrorList
 from marketPlace.models import Producteurs,RefMetier
 from django.http import Http404
 from django.shortcuts import render,get_object_or_404
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+
+
+#@login_required(login_url='connexion:identification')
 def fiche_producteur(request,id):
     
     producteur=get_object_or_404(Producteurs,pk=id)
@@ -35,7 +39,9 @@ def fiche_producteur(request,id):
         if form.is_valid():
            
             nom = form.cleaned_data['nom']
-
+            if request.FILES.get('photo'):    
+                photo=request.FILES['photo']
+                producteur.photo = photo
             metier = form.cleaned_data['metier']
             raison_social = form.cleaned_data['raison_social']
             num_siren = form.cleaned_data['num_siren']
@@ -45,7 +51,7 @@ def fiche_producteur(request,id):
             metier=RefMetier.objects.get(pk=metier)
 
             producteur.nom=nom
-            producteur.photo = request.FILES['photo']
+            
             producteur.metier=metier
             producteur.raison_social=raison_social
             producteur.num_siren=num_siren

@@ -79,7 +79,7 @@ class Connexions(models.Model):
     identifiant = models.CharField(max_length=25)
     password = models.CharField(max_length=255, verbose_name=u"Mot de passe")
     email = models.CharField(max_length=255)
-    opt_in = models.IntegerField()
+    opt_in = models.BooleanField(default=False)
     num_random = models.CharField(max_length=255)
     etat_connexion = models.BooleanField(default=False)
 
