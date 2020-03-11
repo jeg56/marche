@@ -5,3 +5,4 @@ def handler404(request, *args, **kwargs):
     
 def handler500(request, *args, **kwargs):
     return render(request, '500.html', status=500)
+

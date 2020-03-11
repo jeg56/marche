@@ -25,13 +25,14 @@ def identification(request):
         }
     context['form']=IdentificationProducteurForm()
     if request.method == 'POST':
+        
         form = IdentificationProducteurForm(request.POST, error_class=ParagraphErrorList)
         if form.is_valid():
             identifiant = form.cleaned_data['identifiant']
             password = form.cleaned_data['password']
             
             connexion = Connexions.objects.filter(identifiant=identifiant)
-            
+      
             if connexion.exists():
                 if connexion.first().etat_connexion==False:
                     context['message']= 'Vous n''avez pas activé votre compte en cliquant sur le lien dans l''email'
@@ -152,8 +153,6 @@ def inscription_producteur(request):
                 
                 context['errors'] = form.errors.items()
         else:
-
-            
             context['errors'] = form.errors.items()
 
         context['message']= 'Inscription en cours - Email envoyé'
@@ -173,9 +172,10 @@ def inscription_valider(request,id):
     connexion = Connexions.objects.filter(num_random=id,etat_connexion=False)
 
     if connexion.exists():
-        metier=RefMetier.objects.get(pk=1)
-        adresse=Adresses.objects.get(pk=1)
-        producteurs = Producteurs.objects.create(nom='-',metier=metier,adresse=adresse,connexions_id=connexion.first().id,date_debut_id=1)
+        producteurs = Producteurs.objects.create(nom=connexion.first().identifiant,
+                                                photo='img_avatar.png',
+                                                connexions_id=connexion.first().id,
+                                                date_debut_id=1)
         producteurs.save()
         
 

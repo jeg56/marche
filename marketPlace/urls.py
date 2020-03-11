@@ -23,11 +23,17 @@ from marketPlace import views as marketPlace_views
 from django.conf.urls import handler404, handler500
 from django.conf.urls.static import static
 
+from marketPlace.fonctionnalites import autocomplete 
+
 
 urlpatterns = [
+
+    url(r'^ville-autocomplete/$',autocomplete.VilleAutocomplete, name='ville-autocomplete',),
+    url(r'^cp-autocomplete/$',autocomplete.CPAutocomplete, name='cp-autocomplete',),
+
     url(r'^connexion/', include(('connexion.urls', 'connexion'), namespace='connexion')),
     url(r'^producteur/', include(('producteur.urls', 'producteur'), namespace='producteur')),
-    path('market/', include('market.urls')),
+    url(r'^market/', include(('market.urls', 'market'), namespace='market')),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
 

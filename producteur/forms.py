@@ -1,30 +1,41 @@
 from django import forms
 from django.db import models
 from marketPlace.models import Producteurs,RefMetier
-from django.forms.utils import ErrorList
 
 
         
-class FicheProducteurForm(forms.ModelForm):
+class ProducteurForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         readOnlyField = kwargs.pop('readOnlyField') 
         idProducteur = kwargs.pop('idProducteur')
  
-        super(FicheProducteurForm, self).__init__(*args, **kwargs)
+        super(ProducteurForm, self).__init__(*args, **kwargs)
         
+        # --------------------------------------------------------------------------------------------------------------------------------------
+        # Nom
+        # --------------------------------------------------------------------------------------------------------------------------------------
+        if Producteurs.objects.get(pk=idProducteur).nom:
+            self.fields['nom'] = forms.CharField(
+                label='Nom',
+                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                'disabled':readOnlyField,
+                                                'value': Producteurs.objects.get(pk=idProducteur).nom,
+                                                'style':'color:black',
+                                                'placeholder':'Entrez votre nom',
+                                            }),
+                required=False
+            )
+        else:
+            self.fields['nom'] = forms.CharField(
+                label='Nom',
+                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                'disabled':readOnlyField,
+                                                'style':'color:black',
+                                                'placeholder':'Entrez votre nom',
+                                            }),
+                required=False
+            )
 
-
-        self.fields['nom'] = forms.CharField(
-            label='Nom',
-            label_suffix='*',
-           
-            widget=forms.TextInput(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'value': Producteurs.objects.get(pk=idProducteur).nom,
-                                            'style':'color:black',
-                                            'placeholder':'Entrez votre nom',
-                                        }),
-        )
         # --------------------------------------------------------------------------------------------------------------------------------------
         # raison_social
         # --------------------------------------------------------------------------------------------------------------------------------------
@@ -158,9 +169,9 @@ class FicheProducteurForm(forms.ModelForm):
                                             'disabled':readOnlyField,
                                             'style':'min-width:42%;color:black'
                                          }),
-            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefMetier.objects.exclude(id=1)],
+            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefMetier.objects.all()],
+            initial=Producteurs.objects.get(pk=idProducteur).metier_id,
             required=True,
-
         )
         self.fields['photo'].required = False
     # --------------------------------------------------------------------------------------------------------------------------------------
@@ -173,7 +184,7 @@ class FicheProducteurForm(forms.ModelForm):
         model = Producteurs
         fields = ["nom","photo","raison_social","num_siren","description","num_telephone_fix",'num_telephone_portable','metier']
         exclude = ['metier']
-#f = FicheProducteurForm(readOnlyField='True',idProducteur=1)
+#f = ProducteurForm(readOnlyField='True',idProducteur=1)
 
 
   #for e in f:
@@ -187,9 +198,3 @@ class FicheProducteurForm(forms.ModelForm):
    # adresse = models.ForeignKey(Adresses, models.DO_NOTHING)
   #  date_fin_id = models.IntegerField(blank=True, null=True)
 
-class ParagraphErrorList(ErrorList):
-    def __str__(self):
-        return self.as_divs()
-    def as_divs(self):
-        if not self: return ''
-        return '<div class="errorlist">%s</div>' % ''.join(['<p class="errorMessage">%s</p>' % e for e in self])

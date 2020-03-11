@@ -1,3 +1,17 @@
+CREATE SEQUENCE marketPlace.communes_id_seq;
+
+CREATE TABLE marketPlace.communes (
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.communes_id_seq'),
+                cp VARCHAR(5) NOT NULL,
+                ville VARCHAR(255) NOT NULL,
+                latitude REAL,
+                longitude REAL,
+                CONSTRAINT index_communes_id PRIMARY KEY (id)
+);
+
+
+ALTER SEQUENCE marketPlace.communes_id_seq OWNED BY marketPlace.communes.id;
+
 
 CREATE SEQUENCE marketPlace.connexions_id_seq;
 
@@ -118,6 +132,9 @@ CREATE TABLE marketPlace.adresses (
                 CONSTRAINT index_adresse_id PRIMARY KEY (id)
 );
 
+CREATE INDEX index_adresses_adresse ON marketPlace.adresses (adresse);
+CREATE INDEX index_adresses_cp ON marketPlace.adresses (cp);
+CREATE INDEX index_adresses_ville ON marketPlace.adresses (ville);
 
 ALTER SEQUENCE marketPlace.adresses_id_seq OWNED BY marketPlace.adresses.id;
 

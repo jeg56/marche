@@ -1,17 +1,9 @@
 {% extends 'marketPlace/base.html' %}
-vvv
+
 
 
 {% block content %}
 
-
-    {% if request.session.identifiant %}
-        <p> Vous êtes connecté {{request.session.identifiant}} </p>
-  
-    {% else %}
-    <p> <a href="{% url 'connexion:identification' %}"> Identifiez-vous</a></p>
-      
-    {% endif %}
 
  
     <hr> 
@@ -31,7 +23,7 @@ vvv
 
   <div class="card" style="width:400px">
     {% if producteur.photo  %} 
-        <img class="card-img-top avatar" src="{{producteur.photo.url}}" alt="Card image" style="width:100%">
+        <img class="card-img-top avatar" src="{{producteur.photo.url}}" alt="Card image">
      {% endif %} 
     <div class="card-body">
         <h4 class="card-title">{{producteur.nom}}</h4>
@@ -41,8 +33,8 @@ vvv
         <p><a href="#" class="btn btn-primary">Voir mes jours de marchés</a></p>
     </div>
   </div>
-    {% if identifie  %} 
-        {% for e in form %}
+   
+        {% for e in formProducteur %}
                 <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
                     <label class="col-sm" for="{{ e.id_for_label }} "> 
                         {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
@@ -50,12 +42,16 @@ vvv
                     <span class="col-sm">{{ e }} </span>
                 </div>
         {% endfor %}
-    {% endif %} 
 
 
-
-
-
+        {% for e in formAdresse %}
+                <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
+                    <label class="col-sm" for="{{ e.id_for_label }} "> 
+                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
+                    </label>
+                    <span class="col-sm">{{ e }} </span>
+                </div>
+        {% endfor %}
 
 
 
@@ -66,9 +62,31 @@ vvv
 
       {% if request.session.identifiant %}
             <div class="container ">
-                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <button type="submit" class="btn btn-success"  data-toggle="modal" data-target="#myModal">
+                      Enregistrer
+                            
+                </button>
             </div>
   
+
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+                    <div class="modal-body">
+                        <!-- Modal body -->
+                            <div class="spinner-border " role="status"> </div>
+                             <span class='waitmessage'> Enregistrement en cours ...</span>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+
         {% endif %}
   
 

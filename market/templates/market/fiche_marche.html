@@ -1,0 +1,109 @@
+{% extends 'marketPlace/base.html' %}
+vvv
+
+
+{% block content %}
+
+
+
+ 
+    <hr> 
+        <h1 id='fiche_marche' name='fiche_marche'  class="intro-text text-center">{{ title }} {{ marche.nom }}  </h1>       
+    <hr class="detail-separator">
+
+
+    {% if message %}
+     <p>{{message}} </p>
+    {% endif %}
+
+
+    
+
+    <form class="form-inline" action="{% url 'market:fiche_marche' id=marche.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+
+   
+        {% for e in formMarche %}
+                <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
+                    <label class="col-sm" for="{{ e.id_for_label }} "> 
+                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
+                    </label>
+                    <span class="col-sm">{{ e }} </span>
+                </div>
+        {% endfor %}
+
+
+        {% for e in formAdresse %}
+
+
+
+                <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
+                    <label class="col-sm" for="{{ e.id_for_label }} "> 
+                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
+                    </label>
+                    <span class="col-sm">{{ e }} </span>
+                </div>
+
+
+
+
+        {% endfor %}
+
+
+
+
+      {% if request.session.identifiant %}
+            <div class="container ">
+                <button type="submit" class="btn btn-success"  data-toggle="modal" data-target="#myModal">
+                      Enregistrer
+                </button>
+            </div>
+  
+
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+                    <div class="modal-body">
+                        <!-- Modal body -->
+                            <div class="spinner-border " role="status"> </div>
+                             <span class='waitmessage'> Enregistrement en cours ...</span>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+
+
+        {% endif %}
+  
+
+    </form>
+
+
+
+{% if errorsMarche %}
+<div>
+  {% for key, error in errorsMarche %}
+  {% autoescape off %}
+   {{ key }}:{{ error }}
+  {% endautoescape %}
+  {% endfor %}
+</div>
+{% endif %}
+{% if errorsAdresse %}
+<div>
+  {% for key, error in errorsAdresse %}
+  {% autoescape off %}
+   {{ key }}:{{ error }}
+  {% endautoescape %}
+  {% endfor %}
+</div>
+{% endif %}
+
+
+{% endblock %}

@@ -9,6 +9,20 @@ from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import datetime
+def image_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/my_sell/picture/<filename>
+    dateYYYYMMJJ_HH_MM_SS=datetime.datetime.now().strftime('%Y%m%d_%H_%M_%S.%f')
+    #print(instance.nom)
+    return u'{0}-{1}'.format(dateYYYYMMJJ_HH_MM_SS,filename)
+
+class Communes(models.Model):
+    cp = models.CharField(max_length=6)
+    ville = models.CharField(max_length=255)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
+    class Meta:
+        db_table = 'communes'
+
 
 class Adresses(models.Model):
     adresse = models.CharField(max_length=255)
@@ -16,9 +30,38 @@ class Adresses(models.Model):
     ville = models.CharField(max_length=255)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
-
+    commune = models.ForeignKey(Communes, models.DO_NOTHING)
     class Meta:
         db_table = 'adresses'
+
+
+image_storage_marches= FileSystemStorage(
+    # Physical file location ROOT
+    location=u'{0}/marches/'.format(settings.MEDIA_ROOT),
+    # Url for file
+    base_url=u'{0}/marches/'.format(settings.MEDIA_URL),
+)
+
+class Marches(models.Model):
+    nom = models.CharField(max_length=255)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_marches)
+    manifestation = models.ForeignKey('RefManifestation', models.DO_NOTHING)
+    frequence = models.ForeignKey('RefFrequence', models.DO_NOTHING)
+    heure_debut = models.ForeignKey('RefHoraire', models.DO_NOTHING, related_name='heure_debut')
+    heure_fin = models.ForeignKey('RefHoraire', models.DO_NOTHING ,related_name='heure_fin')
+    adresse = models.ForeignKey(Adresses, models.DO_NOTHING)
+    nb_exposant = models.IntegerField(blank=True, null=True)
+    date_debut_id = models.IntegerField()
+    date_fin_id = models.IntegerField(blank=True, null=True)
+    historique= models.TextField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'marches'
+
+
+
+
+
 
 
 class Avis(models.Model):
@@ -51,6 +94,13 @@ class Calendrier(models.Model):
         managed = False
         db_table = 'calendrier'
 
+image_storage_client = FileSystemStorage(
+    # Physical file location ROOT
+    location=u'{0}/clients/'.format(settings.MEDIA_ROOT),
+    # Url for file
+    base_url=u'{0}/clients/'.format(settings.MEDIA_URL),
+)
+    
 
 class Clients(models.Model):
     nom = models.CharField(max_length=255)
@@ -58,7 +108,7 @@ class Clients(models.Model):
     connexion = models.ForeignKey('Connexions', models.DO_NOTHING, blank=True, null=True)
     type_client = models.ForeignKey('RefTypeClient', models.DO_NOTHING)
     num_telephone_portable = models.CharField(max_length=10, blank=True, null=True)
-    photo = models.CharField(max_length=255, blank=True, null=True)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_client)
     adresse = models.ForeignKey(Adresses, models.DO_NOTHING)
 
     class Meta:
@@ -97,23 +147,7 @@ class JourMarche(models.Model):
         db_table = 'jour_marche'
 
 
-class Marches(models.Model):
-    nom = models.CharField(max_length=255)
-    photo = models.CharField(max_length=255, blank=True, null=True)
-    manifestation = models.ForeignKey('RefManifestation', models.DO_NOTHING)
-    frequence = models.ForeignKey('RefFrequence', models.DO_NOTHING)
-    heure_debut = models.ForeignKey('RefHoraire', models.DO_NOTHING, related_name='heure_debut')
-    heure_fin = models.ForeignKey('RefHoraire', models.DO_NOTHING ,related_name='heure_fin')
-    adresse = models.ForeignKey(Adresses, models.DO_NOTHING)
-    nb_exposant = models.IntegerField(blank=True, null=True)
-    date_debut_id = models.IntegerField()
-    date_fin_id = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'marches'
-
-
+    
 class MiseEnVente(models.Model):
     produit = models.ForeignKey('Produits', models.DO_NOTHING)
     producteur = models.ForeignKey('Producteurs', models.DO_NOTHING)
@@ -128,31 +162,24 @@ class MiseEnVente(models.Model):
         managed = False
         db_table = 'mise_en_vente'
 
-image_storage = FileSystemStorage(
+image_storage_producteur = FileSystemStorage(
     # Physical file location ROOT
     location=u'{0}/producteurs/'.format(settings.MEDIA_ROOT),
     # Url for file
     base_url=u'{0}/producteurs/'.format(settings.MEDIA_URL),
 )
 
-
-def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/my_sell/picture/<filename>
-    dateYYYYMMJJ_HH_MM_SS=datetime.datetime.now().strftime('%Y%m%d_%H_%M_%S.%f')
-    #print(instance.nom)
-    return u'{0}-{1}'.format(dateYYYYMMJJ_HH_MM_SS,filename)
-
 class Producteurs(models.Model):
     nom = models.CharField(max_length=50)
-    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_producteur)
     raison_social = models.CharField(max_length=9, blank=True, null=True)
     num_siren = models.CharField(max_length=15, blank=True, null=True)
     connexions = models.ForeignKey(Connexions, models.DO_NOTHING, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     num_telephone_fix = models.CharField(max_length=10, blank=True, null=True)
     num_telephone_portable = models.CharField(max_length=10, blank=True, null=True)
-    metier = models.ForeignKey('RefMetier', models.DO_NOTHING)
-    adresse = models.ForeignKey(Adresses, models.DO_NOTHING)
+    metier = models.ForeignKey('RefMetier', models.DO_NOTHING, null=True)
+    adresse = models.ForeignKey(Adresses, models.DO_NOTHING, null=True)
     date_debut_id = models.IntegerField()
     date_fin_id = models.IntegerField(blank=True, null=True)
 
@@ -160,19 +187,32 @@ class Producteurs(models.Model):
         db_table = 'producteurs'
 
 
+image_storage_produit = FileSystemStorage(
+    # Physical file location ROOT
+    location=u'{0}/producteurs/'.format(settings.MEDIA_ROOT),
+    # Url for file
+    base_url=u'{0}/producteurs/'.format(settings.MEDIA_URL),
+)
+
 class Produits(models.Model):
     nom = models.CharField(max_length=255)
-    photo = models.CharField(max_length=255, blank=True, null=True)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_produit)
     categorie = models.ForeignKey('RefCategorie', models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'produits'
 
-
+image_storage_categorie= FileSystemStorage(
+    # Physical file location ROOT
+    location=u'{0}/produits_categories/'.format(settings.MEDIA_ROOT),
+    # Url for file
+    base_url=u'{0}/produits_categories/'.format(settings.MEDIA_URL),
+)
+   
 class RefCategorie(models.Model):
     label = models.CharField(max_length=50)
-    photo = models.CharField(max_length=255, blank=True, null=True)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_categorie)
     famille = models.ForeignKey('RefFamille', models.DO_NOTHING)
 
     class Meta:
@@ -192,15 +232,14 @@ class RefFrequence(models.Model):
     label = models.CharField(max_length=25)
 
     class Meta:
-        managed = False
         db_table = 'ref_frequence'
 
 
 class RefHoraire(models.Model):
-    heure = models.CharField(max_length=5)
+    label = models.CharField(max_length=5)
+    description = models.CharField(max_length=255,null=True)
 
     class Meta:
-        managed = False
         db_table = 'ref_horaire'
 
 
@@ -216,7 +255,6 @@ class RefManifestation(models.Model):
     label = models.CharField(max_length=25)
 
     class Meta:
-        managed = False
         db_table = 'ref_manifestation'
 
 

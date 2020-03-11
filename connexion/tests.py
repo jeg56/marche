@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 # Create your tests here.
 
 import crypt
+import time
 from django.test import RequestFactory,TestCase
 from marketPlace.models import Connexions,Producteurs,RefMetier,Adresses
 from django.utils import timezone
@@ -110,27 +111,29 @@ class connexionTest(TestCase,StaticLiveServerTestCase):
         user=Connexions.objects.get(pk=3)
         self.assertEqual(user.etat_connexion, True)
 
-        print('---------------------------------------               -----------------------------------------                               ----------------------------------')
-        print('---------------------------------------               -----------------------------------------                               ----------------------------------')
         #on se connecte 
-        self.selenium.get("%s%s" % (self.live_server_url, reverse('connexion:identification')))
-        self.selenium.implicitly_wait(1)
+        response = self.client.post("%s%s" % (self.live_server_url, reverse('connexion:identification')), data={'identifiant':'jeg3','password':'ABCDEFGHIJ'})
+    
+        #self.selenium.get("%s%s" % (self.live_server_url, reverse('connexion:identification')))
+         #self.selenium.implicitly_wait(1)
 
-        self.selenium.find_element_by_name("identifiant").send_keys(user.identifiant)
-        self.selenium.find_element_by_name("password").send_keys('ABCDEFGHIJ')
+         #self.selenium.find_element_by_name("identifiant").send_keys(user.identifiant)
+         #self.selenium.find_element_by_name("password").send_keys('ABCDEFGHIJ')
         
-        self.selenium.implicitly_wait(1)
-        self.selenium.find_element_by_xpath('//*[@id="btn-identifier"]').click()
+         #self.selenium.implicitly_wait(1)
+         #self.selenium.find_element_by_xpath('//*[@id="btn-identifier"]').click()
 
-
+        time.sleep(5)
+        print('rrrrrrrrrrrrrrrrrrrrr')
+        print( response)
+        print('rrrrrrrrrrrrrrrrrrrrr')
         connexion = Connexions.objects.filter(identifiant=user.identifiant)
-        self.selenium.get("%s%s" % (self.live_server_url, reverse('producteur:fiche_producteur', args=(int(Producteurs.objects.get(connexions_id=connexion.first().id).id),) )))
 
-        self.selenium.implicitly_wait(1)
+
+        response=self.client.get("%s%s" % (self.live_server_url, reverse('producteur:fiche_producteur', args=(int(Producteurs.objects.get(connexions_id=connexion.first().id).id),) )),follow=True)
+        
+
         #assert 'Vous êtes connecté' in self.selenium.page_source
-
-
-
 
 
 

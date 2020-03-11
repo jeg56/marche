@@ -1,7 +1,3 @@
-
-
-
-
 from marketPlace.models import Connexions,Producteurs,RefMetier,Adresses
 import random
 import string
