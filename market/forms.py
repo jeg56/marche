@@ -1,38 +1,30 @@
 from django import forms
 from django.db import models
-from marketPlace.models import Marches,RefManifestation,RefFrequence,RefHoraire
+from marketPlace.models import Marches,RefManifestation,RefFrequence,RefHoraire,RefJoursSemaine,JourMarche
 
 
 class MarchesForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         readOnlyField = kwargs.pop('readOnlyField')
         Marches = kwargs.pop('marche')
+        JourMarche= kwargs.pop('jourMarche')
         super(MarchesForm, self).__init__(*args, **kwargs)
 
         # --------------------------------------------------------------------------------------------------------------------------------------
         # Nom
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if Marches.nom:
-            self.fields['nom'] = forms.CharField(
-                label='Nom du marché',
-                widget=forms.TextInput(attrs={'class': 'form-control',
-                                                'disabled':readOnlyField,
-                                                'value': Marches.nom,
-                                                'style':'color:black',
-                                                'placeholder':'Entrez le nom du marché',
-                                            }),
-                required=True
-            )
-        else:
-            self.fields['nom'] = forms.CharField(
-                label='Nom du marché',
-                widget=forms.TextInput(attrs={'class': 'form-control',
-                                                'disabled':readOnlyField,
-                                                'style':'color:black',
-                                                'placeholder':'Entrez le nom du marché',
-                                            }),
-                required=True
-            )
+
+        self.fields['nom'] = forms.CharField(
+            label='Nom du marché',
+            widget=forms.TextInput(attrs={'class': 'form-control',
+                                            'disabled':readOnlyField,
+                                            'value': Marches.nom,
+                                            'style':'color:black',
+                                            'placeholder':'Entrez le nom du marché',
+                                        }),
+            required=True
+        )
+
 
   
         # --------------------------------------------------------------------------------------------------------------------------------------
@@ -119,7 +111,21 @@ class MarchesForm(forms.ModelForm):
                 required=False
             )
 
-    
+        # --------------------------------------------------------------------------------------------------------------------------------------
+        # Jour de la semaine
+        # --------------------------------------------------------------------------------------------------------------------------------------
+        self.fields['JourSemaine'] = forms.MultipleChoiceField(
+            label='Jours de la semaine',
+            widget=forms.CheckboxSelectMultiple(attrs={'class': 'mdb-select colorful-select dropdown-primary md-form style-list',
+                                            'disabled':readOnlyField,
+                                            'style':'min-width:42%;color:black'
+                                            
+                                        }),
+            choices=[(rf_choix.id,rf_choix.jours) for rf_choix in RefJoursSemaine.objects.all()],
+            initial=[(rf_choix.jours_semaine_id) for rf_choix in JourMarche]  ,
+            required=True,
+        )
+
 
         # --------------------------------------------------------------------------------------------------------------------------------------
         # Photo
@@ -130,5 +136,6 @@ class MarchesForm(forms.ModelForm):
     class Meta:
         model = Marches
         fields = ['nom','photo']
+
 
 

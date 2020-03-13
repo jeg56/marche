@@ -4,10 +4,6 @@ from django.db import models
 from marketPlace.models import Adresses,Communes
 from django.forms.utils import ErrorList
 
-
-
-
-
 class AdressesForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -20,88 +16,47 @@ class AdressesForm(forms.ModelForm):
         # Adresses
         # --------------------------------------------------------------------------------------------------------------------------------------
         if Adresses:
-            if Adresses.adresse:
-                self.fields['adresse'] = forms.CharField(
-                    label='Adresse',
-                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                    'disabled':readOnlyField,
-                                                    'value': Adresses.adresse,
-                                                    'style':'color:black',
-                                                    'placeholder':'Entrez votre adresse',
-                                                }),
-                    required=False
-                )
-            else:
-                self.fields['adresse'] = forms.CharField(
-                    label='Adresse',
-                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                    'disabled':readOnlyField,
-                                                    'style':'color:black',
-                                                    'placeholder':'Entrez votre adresse',
-                                                }),
-                    required=False
-                )
+            self.fields['adresse'] = forms.CharField(
+                label='Adresse',
+                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                'disabled':readOnlyField,
+                                                'value': Adresses.adresse,
+                                                'style':'color:black',
+                                                'placeholder':'Entrez votre adresse',
+                                            }),
+                required=True
+            )
 
             # --------------------------------------------------------------------------------------------------------------------------------------
             # Code postal
             # --------------------------------------------------------------------------------------------------------------------------------------
-            if Adresses.cp:
-                self.fields['cp'] = forms.CharField(
-                    label='Code postal',
-                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                    'disabled':readOnlyField,
-                                                    'value': Adresses.cp,
-                                                    'style':'color:black',
-                                                     'onkeyup':'searchCP()',
-                                                     'autocomplete':'on',
-                                                    'placeholder':'Entrez votre code postal',
-                                                }),
-                    required=False
-                )
-            else:
-                self.fields['cp'] = forms.CharField(
-                    label='Code postal',
-                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                    'disabled':readOnlyField,
-                                                    'style':'color:black',
+            self.fields['cp'] = forms.CharField(
+                label='Code postal',
+                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                'disabled':readOnlyField,
+                                                'value': Adresses.cp,
+                                                'style':'color:black',
                                                     'onkeyup':'searchCP()',
                                                     'autocomplete':'on',
-                                                    'placeholder':'Entrez votre code postal',
-                                                }),
-                    required=False
-                )
-
+                                                'placeholder':'Entrez votre code postal',
+                                            }),
+                required=True
+            )
             # --------------------------------------------------------------------------------------------------------------------------------------
             # Ville
             # --------------------------------------------------------------------------------------------------------------------------------------
-            if Adresses.ville:
-                self.fields['ville'] = forms.CharField(
-                    label='Ville',
-                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                    'disabled':readOnlyField,
-                                                    'value': Adresses.ville,
-                                                    'onkeyup':'searchVille()',
-                                                    'style':'color:black',
-                                                    'autocomplete':'on',
-                                                    'placeholder':'Entrez votre ville',
-                                                }),
-                    required=False
-                )
-            else:
-                self.fields['ville'] = forms.CharField(
-                    label='Ville',
-                    widget=forms.TextInput(attrs={'class': 'form-control',
-                                                    'disabled':readOnlyField,
-                                                    'onkeyup':'searchVille()',
-                                                    'style':'color:black',
-                                                    'autocomplete':'on',
-                                                    'placeholder':'Entrez votre ville',
-                                                }),
-                    required=False
-                )
-
-                          
-
+            self.fields['ville'] = forms.CharField(
+                label='Ville',
+                widget=forms.TextInput(attrs={'class': 'form-control',
+                                                'disabled':readOnlyField,
+                                                'value': Adresses.ville,
+                                                'onkeyup':'searchVille()',
+                                                'style':'color:black',
+                                                'autocomplete':'on',
+                                                'placeholder':'Entrez votre ville',
+                                            }),
+                required=True
+            )
 
 
     class Meta:

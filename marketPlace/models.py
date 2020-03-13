@@ -30,7 +30,6 @@ class Adresses(models.Model):
     ville = models.CharField(max_length=255)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
-    commune = models.ForeignKey(Communes, models.DO_NOTHING)
     class Meta:
         db_table = 'adresses'
 
@@ -44,7 +43,7 @@ image_storage_marches= FileSystemStorage(
 
 class Marches(models.Model):
     nom = models.CharField(max_length=255)
-    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_marches)
+    photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_marches,null=True)
     manifestation = models.ForeignKey('RefManifestation', models.DO_NOTHING)
     frequence = models.ForeignKey('RefFrequence', models.DO_NOTHING)
     heure_debut = models.ForeignKey('RefHoraire', models.DO_NOTHING, related_name='heure_debut')
@@ -138,12 +137,9 @@ class Connexions(models.Model):
 
 
 class JourMarche(models.Model):
-    id = models.IntegerField(primary_key=True)
     ref_marche = models.ForeignKey('Marches', models.DO_NOTHING)
     jours_semaine = models.ForeignKey('RefJoursSemaine', models.DO_NOTHING)
-
     class Meta:
-        managed = False
         db_table = 'jour_marche'
 
 
@@ -247,7 +243,6 @@ class RefJoursSemaine(models.Model):
     jours = models.CharField(max_length=15)
 
     class Meta:
-        managed = False
         db_table = 'ref_jours_semaine'
 
 

@@ -261,17 +261,18 @@ CREATE TABLE marketPlace.marches (
                 date_fin_id INTEGER,
                 CONSTRAINT index_marche_id PRIMARY KEY (id)
 );
-
-
 ALTER SEQUENCE marketPlace.marches_id_seq OWNED BY marketPlace.marches.id;
 
+
+
+CREATE SEQUENCE marketPlace.jour_marche_id_seq;
 CREATE TABLE marketPlace.jour_marche (
-                id INTEGER NOT NULL,
+                id INTEGER NOT NULL DEFAULT nextval('marketPlace.jour_marche_id_seq'),
                 ref_marche_id INTEGER NOT NULL,
                 jours_semaine_id INTEGER NOT NULL,
                 CONSTRAINT index_jour_marche_id PRIMARY KEY (id)
 );
-
+ALTER SEQUENCE marketPlace.jour_marche_id_seq OWNED BY marketPlace.jour_marche.id;
 
 CREATE SEQUENCE marketPlace.producteurs_id_seq;
 

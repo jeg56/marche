@@ -249,9 +249,9 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     color: red;
 }
 
-.asterix{
-    color:red;
-    margin:5px
+.asterix:after{
+    content:"*";
+    color: red;
 }
 
 .avatar {
@@ -297,4 +297,15 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     background-clip: padding-box;
     *border-right-width: 2px;
     *border-bottom-width: 2px;
+}
+
+.style-list{
+    list-style-type:none;
+    float: none;
+    margin: 3%;
+    padding-left: initial;
+    display: block ruby
+}
+.espace_text{
+    margin: 3%;
 }

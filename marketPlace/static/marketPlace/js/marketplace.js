@@ -1,4 +1,3 @@
-
 // Recherche par ville 
 function searchVille() {
     var data = {
@@ -40,3 +39,7 @@ function searchCP() {
   });
 }
 
+function validationForm() {
+ 
+  $("#myModal").show();
+}

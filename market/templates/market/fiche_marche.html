@@ -19,66 +19,52 @@ vvv
 
     
 
-    <form class="form-inline" action="{% url 'market:fiche_marche' id=marche.id %}" method="post" enctype="multipart/form-data">
+    <form class="form-inline" action="{% url 'market:fiche_marche' id=marche.id %}" method="post" enctype="multipart/form-data" onsubmit="validationForm()">
         {% csrf_token %}
 
 
    
         {% for e in formMarche %}
                 <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
-                    <label class="col-sm" for="{{ e.id_for_label }} "> 
-                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
-                    </label>
+                    <label class="col-sm {% if  e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
+                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %}  
+                    </label> :
                     <span class="col-sm">{{ e }} </span>
                 </div>
         {% endfor %}
 
 
         {% for e in formAdresse %}
-
-
-
                 <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
-                    <label class="col-sm" for="{{ e.id_for_label }} "> 
-                        {{ e.label }} {% if e.field.label_suffix %} <span class='asterix'> {{e.field.label_suffix}} </span> {% endif %} : 
-                    </label>
+                    <label class="col-sm {% if e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
+                        {{ e.label }} 
+                    </label> : 
                     <span class="col-sm">{{ e }} </span>
                 </div>
-
-
-
-
         {% endfor %}
 
 
 
 
-      {% if request.session.identifiant %}
+        {% if request.session.identifiant %}
             <div class="container ">
-                <button type="submit" class="btn btn-success"  data-toggle="modal" data-target="#myModal">
-                      Enregistrer
+                <button type="submit" class="btn btn-success"  >
+                      Enregistrer    
                 </button>
             </div>
   
-
             <!-- The Modal -->
             <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-
-                    <div class="modal-body">
-                        <!-- Modal body -->
-                            <div class="spinner-border " role="status"> </div>
-                             <span class='waitmessage'> Enregistrement en cours ...</span>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- Modal body -->
+                                <div class="spinner-border " role="status"> </div>
+                                <span class='waitmessage'> Enregistrement en cours ...</span>
+                        </div>
                     </div>
-
                 </div>
             </div>
-            </div>
-
-
-
         {% endif %}
   
 
@@ -86,23 +72,25 @@ vvv
 
 
 
+
+
 {% if errorsMarche %}
-<div>
-  {% for key, error in errorsMarche %}
-  {% autoescape off %}
-   {{ key }}:{{ error }}
-  {% endautoescape %}
-  {% endfor %}
-</div>
+    <div>
+        {% for key, error in errorsMarche %}
+        {% autoescape off %}
+        {{ key }}:{{ error }}
+        {% endautoescape %}
+        {% endfor %}
+        </div>
 {% endif %}
 {% if errorsAdresse %}
-<div>
-  {% for key, error in errorsAdresse %}
-  {% autoescape off %}
-   {{ key }}:{{ error }}
-  {% endautoescape %}
-  {% endfor %}
-</div>
+    <div>
+        {% for key, error in errorsAdresse %}
+        {% autoescape off %}
+        {{ key }}:{{ error }}
+        {% endautoescape %}
+        {% endfor %}
+    </div>
 {% endif %}
 
 
