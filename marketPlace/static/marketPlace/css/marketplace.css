@@ -377,7 +377,21 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     width: 94%;
   }
 
-  #photoProd{
-    height: 35px;
-    width: 74%;
+
+
+.box-size{
+    max-width: 150px;
+    max-height: 150px;
+    padding:0px 0px 15px 0px;
+ 
 }
+.row_produit{
+    margin-bottom:15px;
+    border: #999999 solid 1px;
+    margin: 10px;
+}
+.img_produit{
+    height: 90%;
+    width: 100%;
+}
+

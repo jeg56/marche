@@ -25,29 +25,14 @@ class ProduitsForm(forms.ModelForm):
                                             'style':'min-width:42%;color:black',
                                             'id':'id_famille',
                                             'onfocus':'searchFamille()',
-                                            'onchange': 'searchCategorie()'
+                                       
                                          }),
        
            # initial=Producteurs.objects.get(pk=idProducteur).metier_id,
             required=True,
         )
 
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        # Catégorie de produit
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        self.fields['categorie'] = forms.ChoiceField(
-            label='Catégorie du produit',
-            widget=forms.Select(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black;',
-                                            'onfocus':'searchCategorie()',
-                                            'placeholder':"Entrer votre produit"       
-                                         }),
-          
-     
-            required=True,
-        )
-     
+        
 
         # --------------------------------------------------------------------------------------------------------------------------------------
         # Produit
@@ -63,7 +48,7 @@ class ProduitsForm(forms.ModelForm):
             required=True,
         )
             """
-        self.order_fields(['famille','categorie'])
+        self.order_fields(['famille'])
 
     
     class Meta:

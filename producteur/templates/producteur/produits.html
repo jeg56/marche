@@ -1,59 +1,56 @@
 
-  <div class="card-group">
-  
-   
-    {% for e in produitsAVendre %}
-    <div class="col-sm-4 text-center">
-     
-        
-        <div class="card">      
-                <img class="card-img-top avatar" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
-                <h4 class="card-title">{{e.produit.nom}}</h4>
-          
+<script>
+    $(function() {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>
+
+
+
+        <div id="sortable" data-sortable-id="0" aria-dropeffect="move" class="row">
+
+            <form class='row row_produit col-3' action="{% url 'producteur:producteur' id=producteur.id %}" method="post" enctype="multipart/form-data"  onsubmit="validationForm()">
+                {% csrf_token %}
+            
     
-      
-                <h4 class="card-title">{{e.prix}}</h4>
-                <h4 class="card-title">{{e.quantite_stock}}</h4>
-            </div>    
-      
-            {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>  {% endif %}
-    </div>
-    
-    {% endfor %}
+                <div class="col {% if e.errors %}has-warning has-feedback{% endif %}" >
+                    <span class="col-sm asterix">  Famille </span > : 
+                        <select name="famille" class="form-control" style="min-width:42%;color:black" id="id_famille" onfocus="searchFamille()">
+                            <option value="">Sélectionnez une famille de produit</option></select>
 
+                    <span class="col-sm asterix">  Produit </span> : 
+                    <input id="id_produit" class="form-control" type="text" name="id_produit" onkeyup="searchProduit()" value="" placeholder="Entrer votre produit">
+            
+            
 
-</div>
+                </div>
 
-<form class="form-inline" action="{% url 'producteur:producteur' id=producteur.id %}" method="post" enctype="multipart/form-data"  onsubmit="validationForm()">
-    {% csrf_token %}
+            </form>
 
-    {% for e in formProduit %}
-    <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}" >
-        <label class="col-sm {% if e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
-            {{ e.label }}
-        </label> : 
-        <span class="col-sm">{{ e }} </span>
-    </div>
-{% endfor %}
+                    {% for e in produitsAVendre %}
+                        <div class='row row_produit col-3' data-id="1" data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false" style="">
+                            <div class="col box-size">      
+                                <img class="img-rounded img_produit" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
+                                <p class="text-sm-center">{{e.produit.nom}}</p>
+                            </div>   
+                            <div class="col box-size" > 
+                                <p>Prix : {{e.prix}}</p>
+                                <p>Quantité : {{e.quantite_stock}}</p>
+                            </div>
+                        </div>
+                    {% endfor %} 
 
-
-
-
-
-
-<div class="container row form-group" >
-    <label class="col-sm asterix">  Produit </label> : 
-    <span class="col-sm"> 
-        <input id="id_produit" class="form-control" type="text" name="id_produit" onkeyup="searchProduit()" value="" placeholder="Entrer votre produit">
-    </span>
-</div>
-  <br><br>
+                    
+        </div>
+<!--                            --------------------------------------------------------------------------------             -->
 
 
 
 
-
-
+<!--                            --------------------------------------------------------------------------------             -->
+<!-- https://bootsnipp.com/tags/4.0.0?page=8 -->
+<!-- https://bootsnipp.com/snippets/mQ7Bq -->
 
 {% if errors %}
 <div>
