@@ -1,25 +1,25 @@
 from django import forms
 from django.db import models
-from marketPlace.models import Producteurs,RefMetier
-
+from marketPlace.models import Producteurs
 
         
 class ProducteurForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         readOnlyField = kwargs.pop('readOnlyField') 
-        idProducteur = kwargs.pop('idProducteur')
+        producteur = kwargs.pop('producteur')
+        RefMetier= kwargs.pop('refMetier')
  
         super(ProducteurForm, self).__init__(*args, **kwargs)
         
         # --------------------------------------------------------------------------------------------------------------------------------------
         # Nom
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if Producteurs.objects.get(pk=idProducteur).nom:
+        if producteur.nom:
             self.fields['nom'] = forms.CharField(
                 label='Nom',
                 widget=forms.TextInput(attrs={'class': 'form-control',
                                                 'disabled':readOnlyField,
-                                                'value': Producteurs.objects.get(pk=idProducteur).nom,
+                                                'value': producteur.nom,
                                                 'style':'color:black',
                                                 'placeholder':'Entrez votre nom',
                                             }),
@@ -39,12 +39,12 @@ class ProducteurForm(forms.ModelForm):
         # --------------------------------------------------------------------------------------------------------------------------------------
         # raison_social
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if Producteurs.objects.get(pk=idProducteur).raison_social:
+        if producteur.raison_social:
             self.fields['raison_social'] = forms.CharField(
                 label='Raison social',
                 widget=forms.TextInput(attrs={'class': 'form-control',
                                                 'disabled':readOnlyField,
-                                                'value': Producteurs.objects.get(pk=idProducteur).raison_social,
+                                                'value': producteur.raison_social,
                                                 'style':'color:black',
                                                 'placeholder':'Entrez votre raison social',
                                             }),
@@ -64,12 +64,12 @@ class ProducteurForm(forms.ModelForm):
         # --------------------------------------------------------------------------------------------------------------------------------------
         # num_siren
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if Producteurs.objects.get(pk=idProducteur).num_siren:
+        if producteur.num_siren:
             self.fields['num_siren'] = forms.CharField(
                 label='Numéro de siren',
                 widget=forms.TextInput(attrs={'class': 'form-control',
                                                 'disabled':readOnlyField,
-                                                'value': Producteurs.objects.get(pk=idProducteur).num_siren,
+                                                'value': producteur.num_siren,
                                                 'style':'color:black',
                                                 'placeholder':'Entrez votre numéro de siren',
                                             }),
@@ -89,7 +89,7 @@ class ProducteurForm(forms.ModelForm):
         # --------------------------------------------------------------------------------------------------------------------------------------
         # Description
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if Producteurs.objects.get(pk=idProducteur).description:
+        if producteur.description:
             self.fields['description'] = forms.CharField(
                 label='Description',
                 widget=forms.Textarea(attrs={'class': 'form-control',
@@ -98,7 +98,7 @@ class ProducteurForm(forms.ModelForm):
                                                 'placeholder':'Décrivez qui vous êtes ce que vous faisez ... ',
                         
                                             }),
-                initial= Producteurs.objects.get(pk=idProducteur).description,
+                initial= producteur.description,
                 required=False
             )
         else:
@@ -115,12 +115,12 @@ class ProducteurForm(forms.ModelForm):
         # --------------------------------------------------------------------------------------------------------------------------------------
         # num_telephone_fix
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if Producteurs.objects.get(pk=idProducteur).num_telephone_fix:
+        if producteur.num_telephone_fix:
             self.fields['num_telephone_fix'] = forms.CharField(
                 label='Téléphone fixe',
                 widget=forms.TextInput(attrs={'class': 'form-control',
                                                 'disabled':readOnlyField,
-                                                'value': Producteurs.objects.get(pk=idProducteur).num_telephone_fix,
+                                                'value': producteur.num_telephone_fix,
                                                 'style':'color:black',
                                                 'placeholder':'02.00.00.00.00 ',
                                             }),
@@ -139,12 +139,12 @@ class ProducteurForm(forms.ModelForm):
         # --------------------------------------------------------------------------------------------------------------------------------------
         # num_telephone_portable
         # --------------------------------------------------------------------------------------------------------------------------------------
-        if  Producteurs.objects.get(pk=idProducteur).num_telephone_portable:
+        if  producteur.num_telephone_portable:
             self.fields['num_telephone_portable'] = forms.CharField(
                 label='Téléphone protable',
                 widget=forms.TextInput(attrs={'class': 'form-control',
                                                 'disabled':readOnlyField,
-                                                'value': Producteurs.objects.get(pk=idProducteur).num_telephone_portable,
+                                                'value': producteur.num_telephone_portable,
                                                 'style':'color:black',
                                                 'placeholder':'06.00.00.00.00 ',
                                             }),
@@ -169,8 +169,8 @@ class ProducteurForm(forms.ModelForm):
                                             'disabled':readOnlyField,
                                             'style':'min-width:42%;color:black'
                                          }),
-            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefMetier.objects.all()],
-            initial=Producteurs.objects.get(pk=idProducteur).metier_id,
+            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefMetier],
+            initial=producteur.metier_id,
             required=True,
         )
         self.fields['photo'].required = False

@@ -27,13 +27,14 @@ from marketPlace.fonctionnalites import autocomplete
 
 
 urlpatterns = [
-
     url(r'^ville-autocomplete/$',autocomplete.VilleAutocomplete, name='ville-autocomplete',),
     url(r'^cp-autocomplete/$',autocomplete.CPAutocomplete, name='cp-autocomplete',),
 
     url(r'^connexion/', include(('connexion.urls', 'connexion'), namespace='connexion')),
     url(r'^producteur/', include(('producteur.urls', 'producteur'), namespace='producteur')),
+    url(r'^produit/', include(('produit.urls', 'produit'), namespace='produit')),
     url(r'^market/', include(('market.urls', 'market'), namespace='market')),
+    
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
 

@@ -1,4 +1,3 @@
-
 from django import forms
 from django.db import models
 from marketPlace.models import Adresses,Communes
@@ -36,12 +35,13 @@ class AdressesForm(forms.ModelForm):
                                                 'disabled':readOnlyField,
                                                 'value': Adresses.cp,
                                                 'style':'color:black',
-                                                    'onkeyup':'searchCP()',
-                                                    'autocomplete':'on',
+                                                'onkeyup':'searchCP()',
+                                                'autocomplete':'on',
                                                 'placeholder':'Entrez votre code postal',
                                             }),
                 required=True
             )
+            
             # --------------------------------------------------------------------------------------------------------------------------------------
             # Ville
             # --------------------------------------------------------------------------------------------------------------------------------------

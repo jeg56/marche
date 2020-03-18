@@ -1,98 +1,21 @@
-{% extends 'marketPlace/base.html' %}
 
+ {% extends 'marketPlace/base.html' %}
+ {% block content %}
 
-
-{% block content %}
-
-
- 
     <hr> 
         <h1 id='fiche_producteur' name='fiche_producteur'  class="intro-text text-center">{{ title }} {{ producteur.nom }}  </h1>       
     <hr class="detail-separator">
 
 
-    {% if message %}
-     <p>{{message}} </p>
-    {% endif %}
 
+    {% if fiche_producteur  %} 
+        {% include 'producteur/formulaire_civilite.html' %} 
+    {%endif%}
 
-    
+    {% if fiche_produit  %} 
+        {% include 'producteur/produits.html' %}
+    {%endif%}  
 
-    <form class="form-inline" action="{% url 'producteur:fiche_producteur' id=producteur.id %}" method="post" enctype="multipart/form-data"  onsubmit="validationForm()">
-        {% csrf_token %}
-
-        <div class="card" style="width:400px">
-            {% if producteur.photo  %} 
-                <img class="card-img-top avatar" src="{{producteur.photo.url}}" alt="Card image">
-            {% endif %} 
-            <div class="card-body">
-                <h4 class="card-title">{{producteur.nom}}</h4>
-                {% if producteur.metier %} <p class="card-text">{{producteur.metier.label}}</p>   {% endif %}
-                {% if producteur.description %} <p class="card-text">{{producteur.description}}</p>    {% endif %}
-                <p><a href="#" class="btn btn-primary">Voir mes produits</a></p>
-                <p><a href="#" class="btn btn-primary">Voir mes jours de marchés</a></p>
-            </div>
-        </div>
-   
-        {% for e in formProducteur %}
-                <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
-                    <label class="col-sm {% if e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
-                        {{ e.label }}
-                    </label> : 
-                    <span class="col-sm">{{ e }} </span>
-                </div>
-        {% endfor %}
-
-
-        {% for e in formAdresse %}
-                <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
-                    <label class="col-sm {% if e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
-                        {{ e.label }}
-                    </label> :
-                    <span class="col-sm">{{ e }} </span>
-                </div>
-        {% endfor %}
-
-
-
-
-
-
-
-
-        {% if request.session.identifiant %}
-            <div class="container ">
-                <button type="submit" class="btn btn-success"  >
-                      Enregistrer    
-                </button>
-            </div>
-  
-            <!-- The Modal -->
-            <div class="modal" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <!-- Modal body -->
-                                <div class="spinner-border " role="status"> </div>
-                                <span class='waitmessage'> Enregistrement en cours ...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-  
-
-    </form>
-
-
-
-{% if errors %}
-<div>
-  {% for key, error in errors %}
-  {% autoescape off %}
-   {{ error }}
-  {% endautoescape %}
-  {% endfor %}
-</div>
-{% endif %}
 {% endblock %}
+
+

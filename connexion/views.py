@@ -51,7 +51,7 @@ def identification(request):
                             login(request, user)
 
 
-                        return HttpResponseRedirect(reverse('producteur:fiche_producteur', args=(int(Producteurs.objects.get(connexions_id=connexion.first().id).id),)))
+                        return HttpResponseRedirect(reverse('producteur:producteur', args=(int(Producteurs.objects.get(connexions_id=connexion.first().id).id),)))
                       
                     else:
                         form.add_error('password', 'Identification invalide')

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+  <head id="header">
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -9,21 +9,30 @@
     
     {% load static %}
 
-
     <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/marketplace.css' %}" />
-
+  
 
   </head>
   <body>
-zzzzzzzzzzzzzzzzzzzzzzzzzz
 
+
+    {% if request.session.identifiant %}
+        <p> Vous êtes connecté {{request.session.identifiant}} </p>
+    {% else %}
+      <p> <a href="{% url 'connexion:identification' %}"> Identifiez-vous</a></p>
+    {% endif %}
 
 
     <div class="container">
       <div class="row">
         <div class="box">
-          {% block content %}{% endblock %}
+          {% block content %}
+          
+          
+          
+          
+          {% endblock %}
         </div>
       </div>
     </div>
@@ -34,6 +43,8 @@ zzzzzzzzzzzzzzzzzzzzzzzzzz
     <!-- jQuery -->
     <script src="{% static 'marketPlace/js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'marketPlace/js/jquery-ui-1.12.1.js' %}"></script>
+
+   
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'marketPlace/js/bootstrap.min.js' %}"></script>

@@ -147,7 +147,7 @@ class JourMarche(models.Model):
 class MiseEnVente(models.Model):
     produit = models.ForeignKey('Produits', models.DO_NOTHING)
     producteur = models.ForeignKey('Producteurs', models.DO_NOTHING)
-    prix = models.DecimalField(max_digits=2, decimal_places=0)
+    prix = models.DecimalField(max_digits=2, decimal_places=2)
     quantite_stock = models.IntegerField(blank=True, null=True)
     poids_stock = models.IntegerField(blank=True, null=True)
     quantite_vendu = models.IntegerField(blank=True, null=True)
@@ -155,7 +155,6 @@ class MiseEnVente(models.Model):
     etat_stock = models.BooleanField()
 
     class Meta:
-        managed = False
         db_table = 'mise_en_vente'
 
 image_storage_producteur = FileSystemStorage(
@@ -185,9 +184,9 @@ class Producteurs(models.Model):
 
 image_storage_produit = FileSystemStorage(
     # Physical file location ROOT
-    location=u'{0}/producteurs/'.format(settings.MEDIA_ROOT),
+    location=u'{0}/produits/'.format(settings.MEDIA_ROOT),
     # Url for file
-    base_url=u'{0}/producteurs/'.format(settings.MEDIA_URL),
+    base_url=u'{0}/produits/'.format(settings.MEDIA_URL),
 )
 
 class Produits(models.Model):
@@ -196,7 +195,6 @@ class Produits(models.Model):
     categorie = models.ForeignKey('RefCategorie', models.DO_NOTHING)
 
     class Meta:
-        managed = False
         db_table = 'produits'
 
 image_storage_categorie= FileSystemStorage(
@@ -212,7 +210,6 @@ class RefCategorie(models.Model):
     famille = models.ForeignKey('RefFamille', models.DO_NOTHING)
 
     class Meta:
-        managed = False
         db_table = 'ref_categorie'
 
 
@@ -220,7 +217,6 @@ class RefFamille(models.Model):
     label = models.CharField(max_length=255)
 
     class Meta:
-        managed = False
         db_table = 'ref_famille'
 
 

@@ -1,0 +1,68 @@
+
+  <div class="card-group">
+  
+   
+    {% for e in produitsAVendre %}
+    <div class="col-sm-4 text-center">
+     
+        
+        <div class="card">      
+                <img class="card-img-top avatar" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
+                <h4 class="card-title">{{e.produit.nom}}</h4>
+          
+    
+      
+                <h4 class="card-title">{{e.prix}}</h4>
+                <h4 class="card-title">{{e.quantite_stock}}</h4>
+            </div>    
+      
+            {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>  {% endif %}
+    </div>
+    
+    {% endfor %}
+
+
+</div>
+
+<form class="form-inline" action="{% url 'producteur:producteur' id=producteur.id %}" method="post" enctype="multipart/form-data"  onsubmit="validationForm()">
+    {% csrf_token %}
+
+    {% for e in formProduit %}
+    <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}" >
+        <label class="col-sm {% if e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
+            {{ e.label }}
+        </label> : 
+        <span class="col-sm">{{ e }} </span>
+    </div>
+{% endfor %}
+
+
+
+
+
+
+<div class="container row form-group" >
+    <label class="col-sm asterix">  Produit </label> : 
+    <span class="col-sm"> 
+        <input id="id_produit" class="form-control" type="text" name="id_produit" onkeyup="searchProduit()" value="" placeholder="Entrer votre produit">
+    </span>
+</div>
+  <br><br>
+
+
+
+
+
+
+
+{% if errors %}
+<div>
+{% for key, error in errors %}
+    {% autoescape off %}
+        {{ error }}
+    {% endautoescape %}
+{% endfor %}
+</div>
+{% endif %}
+
+
