@@ -390,6 +390,11 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     border: #999999 solid 1px;
     margin: 10px;
 }
+.row .row_produit:hover{
+    cursor: webkit-grab; cursor: grab;
+    border: #000 solid 2px;
+
+}
 .img_produit{
     height: 90%;
     width: 100%;

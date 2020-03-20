@@ -39,51 +39,27 @@ function searchCP() {
 }
 
 function validationForm() {
-  $("#myModal").show();
-}
-
-
-// Recherche par famille 
-function searchFamille() {
-  var data = {
-    searchFamille: ""
-  };
-  $.ajax({
-      url: '/produit/famille-filter/',
-      data: data,
-      type : 'GET',
-      success : function(response){
-        $('#id_famille').children().remove().end()
-        response.results.forEach(element => 
-          $('#id_famille').append($('<option>', {
-            value: element.id,
-            text:  element.label
-          }))
-        )   
- 
-      },
-  });
+  $("wait").show();
 }
 
 
 // Recherche par Categorie 
 function searchCategorie() {
   var data = {
-    searchFamille: $('#id_famille').val()
+    searchCategorie: $('#id_categorie').val()
   };
   $.ajax({
       url: '/produit/categorie-filter/',
       data: data,
       type : 'GET',
       success : function(response){
-        $('#id_categorie').children().remove().end()
         response.results.forEach(element => 
           $('#id_categorie').append($('<option>', {
             value: element.id,
             text:  element.label
           }))
         ) 
-        $('#id_produit').val("")
+        $('#id_nom').val("")
         var element = document.getElementById("newProd");
         if(typeof(element) != 'undefined' && element != null){
             element.remove()
@@ -94,17 +70,18 @@ function searchCategorie() {
 }
 
 // Recherche par produits 
-function searchProduit() {
+function searchProduit(idProducteur) {
   var data = {
     searchCategorie:$('#id_categorie').val(),
-    searchProduit: $('#id_produit').val(),
+    searchProduit: $('#id_nom').val(),
+    idProducteur: idProducteur,
   };
   $.ajax({
       url: '/produit/produit-filter/',
       data: data,
       type : 'GET',
       success : function(response,){
-        var nom_id="id_produit"
+        var nom_id="id_nom"
         $('#'+nom_id+ "autocomplete-list").remove().end()
         var element = document.getElementById("newProd");
         if(typeof(element) != 'undefined' && element != null){
@@ -145,8 +122,8 @@ function searchProduit() {
              
             
               getNameProd = document.createElement("DIV");
-              getNameProd.innerHTML +='<input id="newProd" class="form-control" placeholder="Entrer le nom du nouveau produit">'
-              getNameProd.innerHTML +='<div><input id="photoProd" class="newProd" type="file"  value="Ajouter une photo"></div>'
+              getNameProd.innerHTML +='<div><label> Nom du produit : </label><input id="newProd" class="form-control" placeholder="Entrer le nom du nouveau produit"></div>'
+              getNameProd.innerHTML +='<div><label> Photo : </label> <input id="photoProd" class="newProd" type="file"  value="Ajouter une photo"></div>'
         
               a.after(getNameProd )
 
@@ -164,24 +141,64 @@ function searchProduit() {
 
 // Vide toutes les listes si on click a coté 
 document.addEventListener("click", function (e) {
-  $("#id_produitautocomplete-list").remove().end()
+  $("#id_nomautocomplete-list").remove().end()
 });
 
-$('#id_famille').append($('<option>', {
-  value: '',
-  text:  'Sélectionnez une famille de produit'
-}))
 
-$('#id_categorie').append($('<option>', {
-  value: '',
-  text:  'Sélectionnez une catégorie de produit'
-}))
+
   
 // ----------------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------------
 
-
+var listElInit=[]
+var listElFin=[]
 $(function() {
-  $("#sortable").sortable();
+  $("#sortable").sortable({
+    stop: function(evt, ui) {
+      listElFin=[]
+      document.getElementsByName('imgDragable').forEach(elt=>{
+          listElFin.push(elt.getAttribute("value"))
+        })
+        validOrdreProduit()
+      }
+    }
+  );
   $("#sortable").disableSelection();
+  searchCategorie();
+  document.getElementsByName('imgDragable').forEach(elt=>{
+    listElInit.push(elt.getAttribute("value"))
+  })
+  listElFin=listElInit
+  document.getElementById("btn-valid-produit-producteur").style.display = 'none';
+  
 });
+
+
+function validOrdreProduit(){
+  if( arrIdentical(listElInit,listElFin)){
+    document.getElementById("btn-valid-produit-producteur").style.display = 'none';
+    document.getElementById('input-ordre-produit-producteur').value=''
+  }else{
+    document.getElementById("btn-valid-produit-producteur").style.display = 'block';
+    document.getElementById('input-ordre-produit-producteur').value=listElFin
+  }
+}
+function arrIdentical(a1, a2) {
+  var i = a1.length;
+  if (i != a2.length) return false;
+  while (i--) {
+      if (a1[i] !== a2[i]) return false;
+  }
+  return true;
+}
+
+
+// ----------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------
+
+function getPos(e){
+  x=e.clientX;
+  y=e.clientY;
+  cursor="Your Mouse Position Is : " + x + " and " + y ;
+  console.log(cursor)
+}

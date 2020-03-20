@@ -1,50 +1,91 @@
-
-<script>
-    $(function() {
-        $("#sortable").sortable();
-        $("#sortable").disableSelection();
-    });
-</script>
-
-
-
-        <div id="sortable" data-sortable-id="0" aria-dropeffect="move" class="row">
-
-            <form class='row row_produit col-3' action="{% url 'producteur:producteur' id=producteur.id %}" method="post" enctype="multipart/form-data"  onsubmit="validationForm()">
-                {% csrf_token %}
-            
+<table>
+    <tr>
+        <td> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddProduit">Ajouter un produit</button> </td>
     
-                <div class="col {% if e.errors %}has-warning has-feedback{% endif %}" >
-                    <span class="col-sm asterix">  Famille </span > : 
-                        <select name="famille" class="form-control" style="min-width:42%;color:black" id="id_famille" onfocus="searchFamille()">
-                            <option value="">Sélectionnez une famille de produit</option></select>
+    </tr>
+</table>
 
-                    <span class="col-sm asterix">  Produit </span> : 
-                    <input id="id_produit" class="form-control" type="text" name="id_produit" onkeyup="searchProduit()" value="" placeholder="Entrer votre produit">
-            
-            
 
+<div id="sortable"  class="row">
+
+
+   
+
+            {% for e in produitsAVendre %}
+                <div name='imgDragable' class='row row_produit col-3' data-id="1" 
+                                data-item-sortable-id="0" 
+                                draggable="true" 
+                                data-toggle="tooltip" title="Hooray!"
+                                role="option" 
+                                aria-grabbed="false" 
+                                value="{{e.produit.id}}"
+                >
+                    <div class="col box-size">      
+                        <img class="img-rounded img_produit" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
+                        <p class="text-sm-center">{{e.produit.nom}}</p>
+                    </div>   
+                    <div class="col box-size" > 
+                        <p>Prix : {{e.prix}}</p>
+                        <p>Quantité : {{e.quantite_stock}}</p>
+                    </div>
                 </div>
+            {% endfor %}  
+</div>
 
-            </form>
+<button id='btn-valid-produit-producteur' style="display: none;" type="submit" class="btn btn-success" data-dismiss="modal" onclick="document.getElementById('form-ordre-produit-producteur').submit();">Valider</button>
+<form id="form-ordre-produit-producteur"  action="{% url 'producteur:save_produit_producteur' id=producteur.id %}"  method="post" >
+    {% csrf_token %}
+    <input type='hidden'  id='input-ordre-produit-producteur' name='input-ordre-produit-producteur' value='' />
+</form>
 
-                    {% for e in produitsAVendre %}
-                        <div class='row row_produit col-3' data-id="1" data-item-sortable-id="0" draggable="true" role="option" aria-grabbed="false" style="">
-                            <div class="col box-size">      
-                                <img class="img-rounded img_produit" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
-                                <p class="text-sm-center">{{e.produit.nom}}</p>
-                            </div>   
-                            <div class="col box-size" > 
-                                <p>Prix : {{e.prix}}</p>
-                                <p>Quantité : {{e.quantite_stock}}</p>
-                            </div>
-                        </div>
-                    {% endfor %} 
-
-                    
-        </div>
 <!--                            --------------------------------------------------------------------------------             -->
+<!-- Trigger the modal with a button -->
 
+
+<!-- Modal -->
+<div id="AddProduit" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" name="addProd">
+      <div class="modal-header">
+        <div class="container">
+            <h4 class="text-center">Ajouter un produit</h4>
+        </div>
+      </div>
+
+        <form id='formAddProduit' action="{% url 'producteur:fiche_produit' id=producteur.id %}" method="post" enctype="multipart/form-data"  onsubmit="validationForm()">
+            {% csrf_token %}
+            <div class="col {% if e.errors %}has-warning has-feedback{% endif %}" >
+                <span class="col-sm asterix">  Catégorie </span > : 
+                    <select id='id_categorie' name="categorie" class="form-control" style="min-width:42%;color:black" id="id_categorie" required="">
+                        <option value="">Sélectionnez la catégorie</option>
+                    </select>
+                    
+
+                <span class="col-sm asterix">  Produit </span> : 
+                <input id="id_nom"  class="form-control" type="text" name="nom" onkeyup="searchProduit({{producteur.id}})" value="" required="" autocomplete="off" placeholder="Entrer votre produit">
+
+              <!--  <span class="col-sm asterix">  Photo </span> : 
+                <input type="file" name="photo" accept="image/*" id="id_photo"> 
+                
+-->
+            </div>
+      
+
+        <div class="modal-footer">
+            <div class="container">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success" data-dismiss="modal" onclick=" $('#formAddProduit').submit();">Valider</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+  </div>
+</div>
 
 
 
@@ -56,7 +97,10 @@
 <div>
 {% for key, error in errors %}
     {% autoescape off %}
-        {{ error }}
+    <div class="row text-left errorMessage">
+        {{key}} : {{ error }}
+    </div>
+        
     {% endautoescape %}
 {% endfor %}
 </div>

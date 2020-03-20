@@ -22,8 +22,6 @@ vvv
     <form class="form-inline" action="{% url 'market:fiche_marche' id=marche.id %}" method="post" enctype="multipart/form-data" onsubmit="validationForm()">
         {% csrf_token %}
 
-
-   
         {% for e in formMarche %}
                 <div class="container row form-group  {% if e.errors %}has-warning has-feedback{% endif %}">
                     <label class="col-sm {% if  e.field.required %} asterix {% endif %}" for="{{ e.id_for_label }} "> 
@@ -54,7 +52,7 @@ vvv
             </div>
   
             <!-- The Modal -->
-            <div class="modal" id="myModal">
+            <div class="modal" name="Wait">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">

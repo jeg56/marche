@@ -52,18 +52,6 @@ CREATE TABLE marketPlace.avis (
 
 ALTER SEQUENCE marketPlace.avis_id_seq OWNED BY marketPlace.avis.id;
 
-CREATE SEQUENCE marketPlace.ref_famille_id_seq;
-
-CREATE TABLE marketPlace.ref_famille (
-                id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_famille_id_seq'),
-                label VARCHAR(255) NOT NULL,
-                CONSTRAINT ref_famille_pk PRIMARY KEY (id)
-);
-
-
-ALTER SEQUENCE marketPlace.ref_famille_id_seq OWNED BY marketPlace.ref_famille.id;
-
-CREATE SEQUENCE marketPlace.ref_frequence_id_seq;
 
 CREATE TABLE marketPlace.ref_frequence (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_frequence_id_seq'),
@@ -225,7 +213,6 @@ CREATE TABLE marketPlace.ref_categorie (
                 id INTEGER NOT NULL DEFAULT nextval('marketPlace.ref_categorie_id_seq'),
                 label VARCHAR(50) NOT NULL,
                 photo VARCHAR(255),
-                famille_id INTEGER NOT NULL,
                 CONSTRAINT index_ref_categorieiid PRIMARY KEY (id)
 );
 

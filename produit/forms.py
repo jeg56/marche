@@ -1,70 +1,31 @@
 
 from django import forms
 from django.db import models
-from marketPlace.models import Produits
+from marketPlace.models import Produits,RefCategorie
 from django.forms.utils import ErrorList
 from collections import OrderedDict
 
 class ProduitsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        readOnlyField = kwargs.pop('readOnlyField')
-        refFamille = kwargs.pop('refFamille')
-        refCategorie = kwargs.pop('refCategorie')
-        produit= kwargs.pop('produit')
-
         super(ProduitsForm, self).__init__(*args, **kwargs)
 
         # --------------------------------------------------------------------------------------------------------------------------------------
-        # Famille de produit
+        # Categorie 
         # --------------------------------------------------------------------------------------------------------------------------------------
-        self.fields['famille'] = forms.ChoiceField(
-            label='Famille du produit',
-            widget=forms.Select(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black',
-                                            'id':'id_famille',
-                                            'onfocus':'searchFamille()',
-                                       
-                                         }),
-       
-           # initial=Producteurs.objects.get(pk=idProducteur).metier_id,
+        self.fields['categorie'] = forms.ChoiceField(
+            label='Catégorie du produit',
+            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefCategorie.objects.all()],
             required=True,
+  
         )
 
-        
+    nom = forms.CharField(label='Nom du produit')
 
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        # Produit
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        """  self.fields['nom'] = forms.ChoiceField(
-            label='Produit',
-            widget=forms.Select(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black',
-                                            'id':'id_produit',
-                                         }),
-            
-            required=True,
-        )
-            """
-        self.order_fields(['famille'])
-
-    
     class Meta:
         model = Produits
-     
-        exclude=('nom','photo')
-
-    
-
-
-
-
-
-
-
-
+        fields = ["nom"]
+       
 
 class ParagraphErrorList(ErrorList):
     def __str__(self):
@@ -72,4 +33,4 @@ class ParagraphErrorList(ErrorList):
     def as_divs(self):
        
         if not self: return ''
-        return '<div class="errorlist">%s</div>' % ''.join(['<p class="errorMessage">%s</p>' % e for e in self])
+        return  ''.join(['%s' % e for e in self])

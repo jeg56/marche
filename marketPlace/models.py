@@ -147,6 +147,7 @@ class JourMarche(models.Model):
 class MiseEnVente(models.Model):
     produit = models.ForeignKey('Produits', models.DO_NOTHING)
     producteur = models.ForeignKey('Producteurs', models.DO_NOTHING)
+    ordre_affichage= models.IntegerField(null=False)
     prix = models.DecimalField(max_digits=2, decimal_places=2)
     quantite_stock = models.IntegerField(blank=True, null=True)
     poids_stock = models.IntegerField(blank=True, null=True)
@@ -207,17 +208,9 @@ image_storage_categorie= FileSystemStorage(
 class RefCategorie(models.Model):
     label = models.CharField(max_length=50)
     photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_categorie)
-    famille = models.ForeignKey('RefFamille', models.DO_NOTHING)
 
     class Meta:
         db_table = 'ref_categorie'
-
-
-class RefFamille(models.Model):
-    label = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = 'ref_famille'
 
 
 class RefFrequence(models.Model):
