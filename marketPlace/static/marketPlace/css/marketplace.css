@@ -386,17 +386,49 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
  
 }
 .row_produit{
-    margin-bottom:15px;
+    padding-top:15px;
     border: #999999 solid 1px;
     margin: 10px;
+    
 }
-.row .row_produit:hover{
-    cursor: webkit-grab; cursor: grab;
-    border: #000 solid 2px;
 
+
+.isInPoubelle{
+    cursor: webkit-grab; cursor: grab;
+    border: red solid 5px;
 }
+
 .img_produit{
     height: 90%;
     width: 100%;
+    background-color: white;
+}
+.h-60{
+    height: 60%;
 }
 
+.imgPoubelle{
+    background-color: lightcoral;
+    width:5%;
+    height:15%;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    animation-name: affichePoubelle;
+    animation-duration: 1s;
+   
+}
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
+
+@keyframes affichePoubelle {
+    from {top: 0px; background-color: white}
+    to {top: 2%; background-color: lightcoral;}
+  }

@@ -16,9 +16,10 @@
     <script src="{% static 'marketPlace/js/jquery-ui-1.12.1.js' %}"></script>
 
   </head>
-  <body>
-
-
+  <body  >
+    <div id="container">
+       <img id='imgPoubelle'  name='imgDragable' style="display:none" class='imgPoubelle' src="{% static 'marketPlace/img/poubelle.png' %}"  >
+    </div>
     {% if request.session.identifiant %}
         <p> Vous êtes connecté {{request.session.identifiant}} </p>
     {% else %}

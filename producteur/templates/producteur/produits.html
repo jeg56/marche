@@ -1,24 +1,25 @@
-<table>
-    <tr>
-        <td> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddProduit">Ajouter un produit</button> </td>
-    
-    </tr>
-</table>
+<div class="row"> 
 
+    <table  >
+        <tr >
+            <td> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddProduit">Ajouter un produit</button> </td>
+          
+        </tr>
+    </table>
+</div>
 
-<div id="sortable"  class="row">
-
-
-   
+<div  id="sortable"  class="row h-60 ">
 
             {% for e in produitsAVendre %}
                 <div name='imgDragable' class='row row_produit col-3' data-id="1" 
                                 data-item-sortable-id="0" 
                                 draggable="true" 
-                                data-toggle="tooltip" title="Hooray!"
+                                data-toggle="tooltip" title="Déplacer les produits par la souris"
                                 role="option" 
                                 aria-grabbed="false" 
-                                value="{{e.produit.id}}"
+                                id="Produit_{{e.produit.id}}"
+                                value={{e.produit.id}}
+                                onmouseenter="initIdGlobal({{e.produit.id}},{{producteur.id}})"
                 >
                     <div class="col box-size">      
                         <img class="img-rounded img_produit" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
@@ -29,6 +30,8 @@
                         <p>Quantité : {{e.quantite_stock}}</p>
                     </div>
                 </div>
+
+                  
             {% endfor %}  
 </div>
 

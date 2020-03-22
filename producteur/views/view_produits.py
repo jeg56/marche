@@ -27,8 +27,6 @@ def add_produit(request,id,producteur=None):
 
 @transaction.atomic
 def save_produit_producteur(request,id,producteur=None):
-
-
     producteur=get_object_or_404(Producteurs,pk=id)
     produitsAVendre=MiseEnVente.objects.filter(producteur_id=producteur.id)
     context = {
@@ -40,16 +38,12 @@ def save_produit_producteur(request,id,producteur=None):
         for idx, val in enumerate(orderProduit.split(',')):
             MiseEnVente.objects.filter(producteur_id=producteur.id,produit=val).update(ordre_affichage=idx)
    
-
     produitsAVendre=MiseEnVente.objects.filter(producteur_id=producteur.id).order_by('ordre_affichage')
     context['produitsAVendre']=produitsAVendre
 
     if request.path==('/producteur/{}/save_produit_producteur'.format(id)):
         context['fiche_produit']=True
-
         return HttpResponseRedirect(reverse('producteur:fiche_produit', args=(id,)))
-
-                     
     else:
         return context
 
