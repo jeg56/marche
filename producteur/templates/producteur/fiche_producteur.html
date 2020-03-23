@@ -8,14 +8,23 @@
     <hr class="detail-separator">
 
 
+    <div id="container">
+        {% if fiche_producteur  %} 
+            {% include 'producteur/formulaire_civilite.html' %} 
+        {%endif%}
+    </div>
 
-    {% if fiche_producteur  %} 
-        {% include 'producteur/formulaire_civilite.html' %} 
-    {%endif%}
+    <div id="container">
+        {% if fiche_produit  %} 
+            {% include 'producteur/produits.html' %}
+        {%endif%}  
+    </div>
 
-    {% if fiche_produit  %} 
-        {% include 'producteur/produits.html' %}
-    {%endif%}  
+    <div id="container"></div>
+        {% if fiche_marche  %} 
+            {% include 'producteur/marches.html' %}
+        {%endif%}  
+    </div>
 
 {% endblock %}
 

@@ -59,10 +59,10 @@ function searchCategorie() {
           }))
         ) 
         $('#id_nom').val("")
-        var element = document.getElementById("newProd");
+        var element = document.getElementById("newNomProd");
         if(typeof(element) != 'undefined' && element != null){
             element.remove()
-            document.getElementById("photoProd").remove();
+            document.getElementById("newPhotoProd").remove();
         }
       },
   });
@@ -82,10 +82,10 @@ function searchProduit(idProducteur) {
       success : function(response,){
         var nom_id="id_nom"
         $('#'+nom_id+ "autocomplete-list").remove().end()
-        var element = document.getElementById("newProd");
+        var element = document.getElementById("newNomProd");
         if(typeof(element) != 'undefined' && element != null){
             element.remove()
-            document.getElementById("photoProd").remove();
+            document.getElementById("newPhotoProd").remove();
         }
       
 
@@ -121,8 +121,8 @@ function searchProduit(idProducteur) {
              
             
               getNameProd = document.createElement("DIV");
-              getNameProd.innerHTML +='<div><label> Nom du produit : </label><input id="newProd" class="form-control" placeholder="Entrer le nom du nouveau produit"></div>'
-              getNameProd.innerHTML +='<div><label> Photo : </label> <input id="photoProd" class="newProd" type="file"  value="Ajouter une photo"></div>'
+              getNameProd.innerHTML +='<div><label> Nom du produit : </label><input id="newNomProd" name="newNomProd" type="text" class="form-control" placeholder="Entrer le nom du nouveau produit"></div>'
+              getNameProd.innerHTML +='<div><label> Photo : </label> <input id="newPhotoProd" name="newPhotoProd" class="newProd" type="file"  value="Ajouter une photo"></div>'
         
               a.after(getNameProd )
 
@@ -188,7 +188,7 @@ $(function() {
        
           
         }else{
-    +
+    
           $("#Produit_"+produit_id).css("border", "#999999 solid 1px");
    
           produit_id=''

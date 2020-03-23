@@ -7,8 +7,6 @@ from django.urls import reverse
 from django.http import JsonResponse
 
 def deleteMiseEnVente(request,idProducteur,id):
-    print('-------------------------------------'+idProducteur)
-    print('-------------------------------------'+id)
     context = {
         'title': 'Infos sur les produits',
     }

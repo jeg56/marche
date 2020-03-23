@@ -8,10 +8,11 @@
     </table>
 </div>
 
-<div  id="sortable"  class="row h-60 ">
+<div  id="sortable"  class="row h-90 justify-content-md-center ">
 
             {% for e in produitsAVendre %}
-                <div name='imgDragable' class='row row_produit col-3' data-id="1" 
+           
+                <div name='imgDragable' class='row_produit col-sm-3' data-id="1" 
                                 data-item-sortable-id="0" 
                                 draggable="true" 
                                 data-toggle="tooltip" title="Déplacer les produits par la souris"
@@ -21,13 +22,15 @@
                                 value={{e.produit.id}}
                                 onmouseenter="initIdGlobal({{e.produit.id}},{{producteur.id}})"
                 >
-                    <div class="col box-size">      
-                        <img class="img-rounded img_produit" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
-                        <p class="text-sm-center">{{e.produit.nom}}</p>
-                    </div>   
-                    <div class="col box-size" > 
-                        <p>Prix : {{e.prix}}</p>
-                        <p>Quantité : {{e.quantite_stock}}</p>
+                    <div class="row">
+                        <div class="col box-size">      
+                            <img class="img-rounded img_produit" src="{{e.produit.photo.url}}" alt="{{e.produit.nom}}">
+                            <p class="text-sm-center">{{e.produit.nom}}</p>
+                        </div>   
+                        <div class="col box-size" > 
+                            <p>Prix : {{e.prix}}</p>
+                            <p>Quantité : {{e.quantite_stock}}</p>
+                        </div>
                     </div>
                 </div>
 

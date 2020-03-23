@@ -6,24 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Max
 
-@transaction.atomic
-def add_produit(request,id,producteur=None):
-    producteur=get_object_or_404(Producteurs,pk=id)
-    produitsAVendre=MiseEnVente.objects.filter(producteur_id=producteur.id)
-    context = {
-        'title': 'Infos sur les produits',
-        'id':id,
-        'producteur':producteur,
-        'produitsAVendre':produitsAVendre,
-    }
-  
 
-    if request.path==('/producteur/{}/add_produit'.format(id)):
-        context['fiche_produit']=True
-  
-        return render(request, 'producteur/fiche_producteur.html', context)
-    else:
-        return context
 
 @transaction.atomic
 def save_produit_producteur(request,id,producteur=None):
@@ -72,9 +55,28 @@ def fiche_produit(request,id,producteur=None):
         formProduit=ProduitsForm(data=request.POST,error_class=ParagraphErrorList)
 
         if formProduit.is_valid():
-            produit= Produits.objects.get(nom=formProduit.cleaned_data['nom'])
+            
             max_ordre_affichage=MiseEnVente.objects.filter(producteur_id=producteur.id).aggregate(Max('ordre_affichage')).get('ordre_affichage__max')
      
+            print(request)
+
+            if formProduit.cleaned_data['nom']=='Autre':
+                categorie_id= request.POST.get('categorie')
+                newNomProd=  request.POST.get('newNomProd')
+               
+                if request.FILES.get('newPhotoProd'): 
+                    newPhotoProd=request.FILES['newPhotoProd']
+     
+                produit, created=Produits.objects.get_or_create(
+                    nom=newNomProd,
+                    photo=newPhotoProd,
+                    categorie_id=categorie_id,
+                )
+                produit.save() 
+            else:
+                produit= Produits.objects.get(nom=formProduit.cleaned_data['nom'])
+
+
             addMiseEnVente , created = MiseEnVente.objects.get_or_create(
                 produit=produit,
                 producteur=producteur,

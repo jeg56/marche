@@ -389,7 +389,7 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
     padding-top:15px;
     border: #999999 solid 1px;
     margin: 10px;
-    
+    height: 230px;
 }
 
 
@@ -399,12 +399,13 @@ html body div.container div.row div.box form.form-inline div.container.row.form-
 }
 
 .img_produit{
-    height: 90%;
+    height: 100%;
     width: 100%;
     background-color: white;
 }
-.h-60{
-    height: 60%;
+
+.h-90{
+    height: 90%;
 }
 
 .imgPoubelle{
