@@ -1,9 +1,12 @@
-<div class="row"> 
+{% load static %}   
+<div id="container">
+    <img id='imgPoubelle'  name='imgDragable' style="display:none" class='imgPoubelle' src="{% static 'marketPlace/img/poubelle.png' %}"  >
+</div>
 
+<div class="row"> 
     <table  >
         <tr >
             <td> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddProduit">Ajouter un produit</button> </td>
-          
         </tr>
     </table>
 </div>
@@ -112,4 +115,7 @@
 </div>
 {% endif %}
 
+
+
+<script src="{% static 'producteur/js/producteur-produit.js' %}"></script>
 

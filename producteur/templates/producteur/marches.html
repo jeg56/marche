@@ -1,10 +1,126 @@
-{{ title }}
 
+
+<!--
+
+Espace de recherche : 
 <div class="row"> 
-    <table  >
-        <tr >
-            <td> <button type="button" class="btn btn-info btn-lg" data-toggle="modal" >Ajouter un marchés</button> </td>
-          
-        </tr>
-    </table>
+ 
+    <div class="col-6 ">
+        <span class="asterix">  Nom du marché  </span> : 
+        <input id="id_nom"  class="form-control" type="text" name="nom" onkeyup="" value="" required="" autocomplete="off" placeholder="Entrer le nom du marché">
+    </div>
+    <div class="col-6 ">
+        <span class="asterix">  adresse </span> : 
+        <input id="id_nom"  class="form-control" type="text" name="nom" onkeyup="" value="" required="" autocomplete="off" placeholder="Entrer une adresse">
+    </div>
+
+        <div class="w-100"></div>
+
+    <div class="col-6 ">
+        <span>  Catégorie </span > : 
+        <select id='id_categorie' name="categorie" class="form-control select"  id="id_categorie" required="">
+            <option value="">Sélectionnez la catégorie</option>
+        </select>
+    </div>
+
+    <div class="col-6 ">
+        <span>  Jour de la semaine </span > : 
+        <select id='id_categorie' name="categorie" class="form-control select"  id="id_categorie" required="">
+            <option value="">Sélectionnez le jour de la semaine</option>
+        </select>
+    </div>
+
+    
 </div>
+--> 
+<style>
+    
+</style>
+<div class="row"> 
+    <div class="col-md-5">
+        <div class="box">
+            <div id="francemap" class="map"></div>
+        </div>
+    </div>
+
+
+
+
+<!--  ------------------------------------------------------------------------------------------------------------------------------------     -->
+<!--  ------------------------------------------------------------------------------------------------------------------------------------     -->
+
+
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d' async defer></script>
+
+    <div class="col-md-7">
+       
+            <div class="col-lg-12 text-center">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                <ul class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+                </ul>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                        <h2 class="brand-name">Lundi</h2>
+                            <div id="lundi" class="carroussel-map"></div>
+                        </div>
+                        <div class="item">
+                            <h2 class="brand-name">Mardi</h2>
+                            <div id="mardi" class="carroussel-map"></div>
+                        </div>
+                        <div class="item">
+                            <h2 class="brand-name">Mercredi</h2>
+                                <div id="mercredi" class="carroussel-map"></div>
+                        </div>
+                        <div class="item">
+                            <h2 class="brand-name">Jeudi</h2>
+                                <div id="jeudi" class="carroussel-map"></div>
+                        </div>
+                        <div class="item">
+                            <h2 class="brand-name">Vendredi</h2>
+                            <div id="vendredi" class="carroussel-map"></div>
+                        </div>
+                        <div class="item">
+                            <h2 class="brand-name">Samedi</h2>
+                                <div id="samedi" class="carroussel-map"></div>
+                        </div>
+                        <div class="item">
+                            <h2 class="brand-name">Dimanche</h2>
+                                <div id="dimanche" class="carroussel-map"></div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="icon-prev"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="icon-next"></span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!--  ------------------------------------------------------------------------------------------------------------------------------------     -->
+<!--  ------------------------------------------------------------------------------------------------------------------------------------     -->
+
+
+{% load static %}   
+
+<script src="{% static 'producteur/js/maps.js' %}"></script>
+<!-- <script src="{% static 'producteur/js/market.js' %}"></script>  -->
+<script src="{% static 'producteur/js/producteur-marche.js' %}"></script>

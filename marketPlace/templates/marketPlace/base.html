@@ -6,28 +6,78 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>My littel market</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/bootstrap.min.css' %}" />
+ 
+
     <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/marketplace.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/jqvmap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'marketPlace/css/business-casual.css' %}" />
     <!-- jQuery -->
     <script src="{% static 'marketPlace/js/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'marketPlace/js/jquery-ui-1.12.1.js' %}"></script>
-
+    
+    <script src="{% static 'marketPlace/js/bootstrap.min.js' %}"></script>
   </head>
   <body  >
-    <div id="container">
-       <img id='imgPoubelle'  name='imgDragable' style="display:none" class='imgPoubelle' src="{% static 'marketPlace/img/poubelle.png' %}"  >
+**********************************************
+
+
+<div class="brand">Mon petit marché!!</div>
+    
+
+<!-- Navigation -->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="active" href="index.html">Coté marchés</a>
+                </li>
+                <li>
+                    <a href="producteurs.html">Coté producteurs</a>
+                </li>
+                <li>
+                    <a href="produits.html">Coté produits</a>
+                </li>
+                <li>
+                    <a href="restaurateurs.html">Coté restaurateur</a>
+                </li>
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
+    <!-- /.container -->
+</nav>
+
+
+
+
+*****************************************
+    
+
     {% if request.session.identifiant %}
         <p> Vous êtes connecté {{request.session.identifiant}} </p>
     {% else %}
       <p> <a href="{% url 'connexion:identification' %}"> Identifiez-vous</a></p>
     {% endif %}
 
-
-    <div class="container">
+    <div class="container-fluid context">
+  
       <div class="row">
         <div class="box">
           {% block content %}
@@ -42,15 +92,18 @@
 
 
 
-
-
     
 
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'marketPlace/js/bootstrap.min.js' %}"></script>
+
     <script src="{% static 'marketPlace/js/marketplace.js' %}"></script>
     
+  <!-- Map JavaScript -->
+  
+  <script src="{% static 'marketPlace/js/jquery.vmap.js' %}" type="text/javascript"></script>
+  <script src="{% static 'marketPlace/js/jquery.vmap.france.js' %}" type="text/javascript"></script>
+	<script src="{% static 'marketPlace/js/jquery.vmap.colorsFrance.js' %}" type="text/javascript"></script>
 
   </body>
 </html>

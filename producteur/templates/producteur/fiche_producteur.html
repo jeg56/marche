@@ -1,5 +1,6 @@
 
  {% extends 'marketPlace/base.html' %}
+
  {% block content %}
 
 
@@ -8,23 +9,29 @@
     <hr class="detail-separator">
 
 
-    <div id="container">
+  
         {% if fiche_producteur  %} 
+        <div id="container">
             {% include 'producteur/formulaire_civilite.html' %} 
+        </div>
         {%endif%}
-    </div>
+ 
 
-    <div id="container">
+   
         {% if fiche_produit  %} 
+        <div id="container">
             {% include 'producteur/produits.html' %}
+        </div>
         {%endif%}  
-    </div>
 
-    <div id="container"></div>
+
+    
         {% if fiche_marche  %} 
+        <div id="container">
             {% include 'producteur/marches.html' %}
+        </div>
         {%endif%}  
-    </div>
+    
 
 {% endblock %}
 

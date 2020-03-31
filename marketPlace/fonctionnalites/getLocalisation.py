@@ -22,8 +22,3 @@ def getLocalisation(adresse):
 
     print(latitude +' '+ longitude)
     return latitude,longitude
-
-
-
-
-
