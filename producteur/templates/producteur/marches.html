@@ -49,9 +49,38 @@ Espace de recherche :
 <!--  ------------------------------------------------------------------------------------------------------------------------------------     -->
 <!--  ------------------------------------------------------------------------------------------------------------------------------------     -->
 
+    <script>
+        function carte (code) {
+            var data = {
+                searchCP:code,
+              };
+            
+              $.ajax({
+                  url: '/producteur/market-filter-cp/',
+                  data: data,
+                  type : 'GET',
+                  success : function(response){
+        
+                    dataCoordAdresse=response
+                    
+                    var mapScriptUrl = 'https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d';
+                    var script = document.createElement("script");
+                    script.setAttribute('defer', '');
+                    script.setAttribute('async', '');
+                    script.setAttribute("type", "text/javascript");
+                    script.setAttribute("src", mapScriptUrl);
+                    document.body.appendChild(script);
+        
+        
+                  },
+              });
+        }
+        carte (-1)
+    </script>
+ <!--
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d' async defer></script>
 
-    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d' async defer></script>
-
+ -->   
     <div class="col-md-7">
        
             <div class="col-lg-12 text-center">
@@ -71,31 +100,31 @@ Espace de recherche :
                     <div class="carousel-inner">
                         <div class="item active">
                         <h2 class="brand-name">Lundi</h2>
-                            <div id="lundi" class="carroussel-map"></div>
+                            <div id="Lundi" class="carroussel-map"></div>
                         </div>
                         <div class="item">
                             <h2 class="brand-name">Mardi</h2>
-                            <div id="mardi" class="carroussel-map"></div>
+                            <div id="Mardi" class="carroussel-map"></div>
                         </div>
                         <div class="item">
                             <h2 class="brand-name">Mercredi</h2>
-                                <div id="mercredi" class="carroussel-map"></div>
+                                <div id="Mercredi" class="carroussel-map"></div>
                         </div>
                         <div class="item">
                             <h2 class="brand-name">Jeudi</h2>
-                                <div id="jeudi" class="carroussel-map"></div>
+                                <div id="Jeudi" class="carroussel-map"></div>
                         </div>
                         <div class="item">
                             <h2 class="brand-name">Vendredi</h2>
-                            <div id="vendredi" class="carroussel-map"></div>
+                            <div id="Vendredi" class="carroussel-map"></div>
                         </div>
                         <div class="item">
                             <h2 class="brand-name">Samedi</h2>
-                                <div id="samedi" class="carroussel-map"></div>
+                                <div id="Samedi" class="carroussel-map"></div>
                         </div>
                         <div class="item">
                             <h2 class="brand-name">Dimanche</h2>
-                                <div id="dimanche" class="carroussel-map"></div>
+                                <div id="Dimanche" class="carroussel-map"></div>
                         </div>
                     </div>
 

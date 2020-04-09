@@ -1,5 +1,4 @@
 {% extends 'marketPlace/base.html' %}
-vvv
 
 
 {% block content %}
@@ -41,9 +40,161 @@ vvv
                 </div>
         {% endfor %}
 
+        <!-- ----------------------------------------------------------------------------------------------------------------- -->
+
+                 
+                
+                <label class="container row form-check-label" for="Lundi" >
+                    <input type="checkbox" class="form-check-input" id="Lundi"  name="Lundi"  onchange='shownHidden(this)'  {% if jour_1 %} checked {% endif %} > Lundi  
+                    <span id='horLundi'>
+                        horaire : 
+                        <select id="LundiSelectDeb" name="LundiSelectDeb">
+                            {% if not jour_1.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_1.heure_debut and jour_1.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                       -
+                       <select id="LundiSelectFin" name="LundiSelectFin">
+                        {% if not jour_1.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                        {% for e in horaireJson %}
+                                <option value="{{e.id}}" {% if e.id == jour_1.heure_fin and jour_1.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                        {% endfor %}
+                    </select>
+                    </span>
+                </label>
+
+                <label class="container row form-check-label" for="Mardi" >
+                    <input type="checkbox" class="form-check-input" id="Mardi"  name="Mardi"  onchange='shownHidden(this)'  {% if jour_2 %} checked {% endif %} > Mardi  
+                    <span id='horMardi'>
+                        horaire : 
+                        <select id="MardiSelectDeb" name="MardiSelectDeb">
+                            {% if not jour_2.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_2.heure_debut and jour_2.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                       -
+                       <select id="MardiSelectFin" name="MardiSelectFin">
+                        {% if not jour_2.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                        {% for e in horaireJson %}
+                                <option value="{{e.id}}" {% if e.id == jour_2.heure_fin and jour_2.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                        {% endfor %}
+                    </select>
+                    </span>
+                </label>
+
+                <label class="container row form-check-label" for="Mercredi" >
+                    <input type="checkbox" class="form-check-input" id="Mercredi"  name="Mercredi"  onchange='shownHidden(this)'  {% if jour_3 %} checked {% endif %} > Mercredi   
+                    <span id='horMercredi'>
+                        horaire : 
+                        <select id="MercrediSelectDeb" name="MercrediSelectDeb">
+                            {% if not jour_3.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_3.heure_debut and jour_3.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    -
+                        <select id="MercrediSelectFin" name="MercrediSelectFin">
+                            {% if not jour_3.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_3.heure_fin and jour_3.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </label>
+
+                <label class="container row form-check-label" for="Jeudi" >
+                    <input type="checkbox" class="form-check-input" id="Jeudi"  name="Jeudi"  onchange='shownHidden(this)'  {% if jour_4 %} checked {% endif %} > Jeudi   
+                    <span id='horJeudi'>
+                        horaire : 
+                        <select id="JeudiSelectDeb" name="JeudiSelectDeb">
+                            {% if not jour_4.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_4.heure_debut and jour_4.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    -
+                        <select id="JeudiSelectFin" name="JeudiSelectFin">
+                            {% if not jour_4.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_4.heure_fin and jour_4.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </label>
+
+                <label class="container row form-check-label" for="Vendredi" >
+                    <input type="checkbox" class="form-check-input" id="Vendredi"  name="Vendredi"  onchange='shownHidden(this)'  {% if jour_5 %} checked {% endif %} > Vendredi   
+                    <span id='horVendredi'>
+                        horaire : 
+                        <select id="VendrediSelectDeb" name="VendrediSelectDeb">
+                            {% if not jour_5.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_5.heure_debut and jour_5.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    -
+                        <select id="VendrediSelectFin" name="VendrediSelectFin">
+                            {% if not jour_5.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_5.heure_fin and jour_5.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </label>
+
+
+                <label class="container row form-check-label" for="Samedi" >
+                    <input type="checkbox" class="form-check-input" id="Samedi"  name="Samedi"  onchange='shownHidden(this)'  {% if jour_6 %} checked {% endif %} > Samedi   
+                    <span id='horSamedi'>
+                        horaire : 
+                        <select id="SamediSelectDeb" name="SamediSelectDeb">
+                            {% if not jour_6.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_6.heure_debut and jour_6.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    -
+                        <select id="SamediSelectFin" name="SamediSelectFin">
+                            {% if not jour_6.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_6.heure_fin and jour_6.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </label>
+
+
+                <label class="container row form-check-label" for="Dimanche" >
+                    <input type="checkbox" class="form-check-input" id="Dimanche"  name="Dimanche"  onchange='shownHidden(this)'  {% if jour_7 %} checked {% endif %} > Dimanche   
+                    <span id='horDimanche'>
+                        horaire : 
+                        <select id="DimancheSelectDeb" name="DimancheSelectDeb">
+                            {% if not jour_7.heure_debut %} <option disabled selected value="" selected>Heure d'ouverture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_7.heure_debut and jour_7.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    -
+                        <select id="DimancheSelectFin" name="DimancheSelectFin">
+                            {% if not jour_7.heure_fin %} <option disabled selected value="" selected>Heure de fermeture</option> {% endif %} 
+                            {% for e in horaireJson %}
+                                    <option value="{{e.id}}" {% if e.id == jour_7.heure_fin and jour_7.jours_semaine %} selected {% endif %}  >{{e.label}}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </label>
+                    
+        <!-- ----------------------------------------------------------------------------------------------------------------- -->
 
 
 
+
+
+
+
+         <!-- ----------------------------------------------------------------------------------------------------------------- -->
         {% if request.session.identifiant %}
             <div class="container ">
                 <button type="submit" class="btn btn-success"  >
@@ -69,8 +220,46 @@ vvv
     </form>
 
 
+<!--                      --------------------------------------------------------------------------------------          -->
+{% if adresse__longitude %}
 
 
+
+<script>
+
+
+
+    $(function() {
+
+        date_marche=""
+        "{{date_marche}}".split('---------').forEach(e=>{
+            date_marche+=e+'<br>'
+        }) 
+     
+        dataCoordAdresse={  "nom":'{{nom}}',
+                            "nb_exposant":'{{nb_exposant}}',
+                            "adresse__adresse":"{{adresse__adresse}}",
+                            "adresse__cp":'{{adresse__cp}}',
+                            "adresse__ville":"{{adresse__ville}}",
+                            "date_marche":date_marche,
+                            "adresse__latitude":{{adresse__latitude}},
+                            "adresse__longitude":{{adresse__longitude}}
+                        }
+  
+        var mapScriptUrl = 'https://www.bing.com/api/maps/mapcontrol?callback=GetMapCarte&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d';
+        var script = document.createElement("script");
+        script.setAttribute('defer', '');
+        script.setAttribute('async', '');
+        script.setAttribute("type", "text/javascript");
+        script.setAttribute("src", mapScriptUrl);
+        document.body.appendChild(script);
+
+    });
+</script>
+<div id="zone_carte" style="position:relative;width:600px;height:400px;"></div>
+
+{% endif %}
+<!--                      --------------------------------------------------------------------------------------          -->
 
 {% if errorsMarche %}
     <div>
@@ -91,5 +280,18 @@ vvv
     </div>
 {% endif %}
 
+{% if errorsDateMarche %}
+    <div>
+        {% for key, error in errorsDateMarche %}
+        {% autoescape off %}
+        {{ key }}:{{ error }}
+        {% endautoescape %}
+        {% endfor %}
+    </div>
+{% endif %}
 
+
+{% load static %}   
+<script src="{% static 'market/js/market.js' %}"></script>
+<script src="{% static 'market/js/maps.js' %}"></script>
 {% endblock %}

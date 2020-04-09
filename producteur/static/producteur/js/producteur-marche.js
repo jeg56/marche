@@ -25,7 +25,7 @@ $(document).ready(function() {
 
                     dataCoordAdresse=response
                     
-                    var mapScriptUrl = 'https://www.bing.com/api/maps/mapcontrol?callback=GetMap_Lundi&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d';
+                    var mapScriptUrl = 'https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Aj-CW4KKZ2QbFVCuOEKVg7PpUsZvMYhJaKLY226BDjRkw-s4tJCKsv0onicoVP5d';
                     var script = document.createElement("script");
                     script.setAttribute('defer', '');
                     script.setAttribute('async', '');
@@ -36,7 +36,6 @@ $(document).ready(function() {
 
                   },
               });
-
 
 
 

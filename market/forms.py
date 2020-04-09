@@ -7,7 +7,6 @@ class MarchesForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         readOnlyField = kwargs.pop('readOnlyField')
         Marches = kwargs.pop('marche')
-        JourMarche= kwargs.pop('jourMarche')
         super(MarchesForm, self).__init__(*args, **kwargs)
 
         # --------------------------------------------------------------------------------------------------------------------------------------
@@ -41,48 +40,6 @@ class MarchesForm(forms.ModelForm):
             required=True,
         )
         
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        # Fréquence
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        self.fields['frequence'] = forms.ChoiceField(
-            label='Fréquence',
-            widget=forms.Select(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black'
-                                         }),
-            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefFrequence.objects.all()],
-            initial=Marches.frequence_id,
-            required=True,
-        )
-
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        # Horaire début
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        self.fields['heure_debut'] = forms.ChoiceField(
-            label='Heure de début',
-            widget=forms.Select(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black'
-                                         }),
-            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefHoraire.objects.all()],
-            initial=Marches.heure_debut_id,
-            required=True,
-        )
-
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        # Horaire fin
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        
-        self.fields['heure_fin'] = forms.ChoiceField(
-            label='Heure de fin',
-            widget=forms.Select(attrs={'class': 'form-control',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black'
-                                         }),
-            choices=[(rf_choix.id,rf_choix.label) for rf_choix in RefHoraire.objects.all()],
-            initial=Marches.heure_fin_id,
-            required=True,
-        )
 
         # --------------------------------------------------------------------------------------------------------------------------------------
         # Nbre d'exposant
@@ -111,20 +68,7 @@ class MarchesForm(forms.ModelForm):
                 required=False
             )
 
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        # Jour de la semaine
-        # --------------------------------------------------------------------------------------------------------------------------------------
-        self.fields['JourSemaine'] = forms.MultipleChoiceField(
-            label='Jours de la semaine',
-            widget=forms.CheckboxSelectMultiple(attrs={'class': 'mdb-select colorful-select dropdown-primary md-form style-list',
-                                            'disabled':readOnlyField,
-                                            'style':'min-width:42%;color:black'
-                                            
-                                        }),
-            choices=[(rf_choix.id,rf_choix.jours) for rf_choix in RefJoursSemaine.objects.all()],
-            initial=[(rf_choix.jours_semaine_id) for rf_choix in JourMarche]  ,
-            required=True,
-        )
+
 
 
         # --------------------------------------------------------------------------------------------------------------------------------------
@@ -139,3 +83,17 @@ class MarchesForm(forms.ModelForm):
 
 
 
+
+class JourMarcheForm(forms.ModelForm):
+    def clean(self):
+        data = self.cleaned_data
+        print('-----------------------------------------')
+        print(data.get('Mercredi', None))
+        print('-----------------------------------------')
+        if data.get('Mercredi', None):
+            return data
+        else:
+            raise forms.ValidationError('Provide either a date and time or a timestamp')
+    class Meta:
+        model = JourMarche
+        fields = ['heure_debut','heure_fin']

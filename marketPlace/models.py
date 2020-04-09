@@ -45,9 +45,6 @@ class Marches(models.Model):
     nom = models.CharField(max_length=255)
     photo =   models.ImageField(upload_to=image_directory_path, storage=image_storage_marches,null=True)
     manifestation = models.ForeignKey('RefManifestation', models.DO_NOTHING)
-    frequence = models.ForeignKey('RefFrequence', models.DO_NOTHING)
-    heure_debut = models.ForeignKey('RefHoraire', models.DO_NOTHING, related_name='heure_debut')
-    heure_fin = models.ForeignKey('RefHoraire', models.DO_NOTHING ,related_name='heure_fin')
     adresse = models.ForeignKey(Adresses, models.DO_NOTHING)
     nb_exposant = models.IntegerField(blank=True, null=True)
     date_debut_id = models.IntegerField()
@@ -139,6 +136,8 @@ class Connexions(models.Model):
 class JourMarche(models.Model):
     ref_marche = models.ForeignKey('Marches', models.DO_NOTHING)
     jours_semaine = models.ForeignKey('RefJoursSemaine', models.DO_NOTHING)
+    heure_debut = models.ForeignKey('RefHoraire', models.DO_NOTHING, related_name='heure_debut')
+    heure_fin = models.ForeignKey('RefHoraire', models.DO_NOTHING ,related_name='heure_fin')
     class Meta:
         db_table = 'jour_marche'
 
