@@ -1,5 +1,5 @@
 asgiref==3.2.4
-Django==2.0
+Django==2.2.13
 django-autocomplete-light==3.2.10
 django-debug-toolbar==2.2
 django-utils==0.0.2
